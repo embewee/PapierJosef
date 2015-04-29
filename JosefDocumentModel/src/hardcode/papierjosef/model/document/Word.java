@@ -7,9 +7,10 @@ import java.util.List;
  * the words part of speech attribute and an appendix to the word, which may be a space or another String.
  * Words are contained by Sentences.  
  */
-public class Word extends TextElement<String> {
+public class Word extends Token {
+	//pos ist Klasseneigenschaft und nicht Attribut, weil es eine
+	//so wichtige und besondere Eigenschaft ist. 
 	private PartOfSpeech pos;
-	private String appendix;
 
 	/**
 	 * Creates a new Word.
@@ -27,26 +28,6 @@ public class Word extends TextElement<String> {
 		}
 
 		this.pos = pos;
-	}
-	
-	/**
-	 * Returns the appendix for this word.<p>
-	 * An appendix is a String which follows the concrete word. It may be space or another String, which is not a word.
-	 * In other words: an Appendix describes the gap between two word. 
-	 * @return String: the appendix
-	 */
-	public String getAppendix() {
-		return appendix;
-	}
-
-	/**
-	 * Sets the appendix for this word.<p>
-	 * An appendix is a String which follows the concrete word. It may be space or another String, which is not a word.
-	 * In other words: an Appendix describes the gap between two word. 
-	 * @param appendix String: the appendix
-	 */
-	public void setAppendix(String appendix) {
-		this.appendix = appendix;
 	}
 
 	/**
@@ -67,6 +48,6 @@ public class Word extends TextElement<String> {
 
 	@Override
 	public String getText() {
-		return getChildElements().get(0) + appendix;
+		return getChildElements().get(0);
 	}
 }
