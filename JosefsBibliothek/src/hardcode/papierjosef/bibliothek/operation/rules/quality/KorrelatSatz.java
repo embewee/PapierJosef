@@ -1,6 +1,6 @@
-package hardcode.papierjosef.bibliothek.operation.instance;
+package hardcode.papierjosef.bibliothek.operation.rules.quality;
 
-import hardcode.papierjosef.bibliothek.operation.base.Regel;
+import hardcode.papierjosef.bibliothek.operation.Regel;
 import hardcode.papierjosef.model.document.Sentence;
 
 public class KorrelatSatz extends Regel<Sentence> {

@@ -1,6 +1,5 @@
-package hardcode.papierjosef.bibliothek.operation.base;
+package hardcode.papierjosef.bibliothek.operation;
 
-import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.model.document.TextElement;
 
 /**

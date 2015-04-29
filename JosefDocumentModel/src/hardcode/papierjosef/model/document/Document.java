@@ -13,7 +13,7 @@ import java.util.List;
  *    |
  *    +- Sentence
  *       |
- *       +- Word
+ *       +- Word / Punctuation / Residual
  */
 public class Document extends TextElement<Paragraph> {
 
