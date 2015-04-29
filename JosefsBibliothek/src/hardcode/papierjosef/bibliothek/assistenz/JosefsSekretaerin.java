@@ -42,21 +42,28 @@ public class JosefsSekretaerin {
 		return sprache;
 	}
 
-	/**
-	 * Erstellt eine neue Sekretaerin. Laedt eine Datei. Laedt das NLP-Model fuer die gegebene Sprache
-	 *  
-	 * @param datei File: Zu ueberpruefende Datei
-	 * @param sprache Sprache: Eine Instanz der Sprache der zu ueperpruefenden Datei
-	 * @throws Exception
-	 * @throws IOException
-	 */
-	public JosefsSekretaerin(File datei, Language sprache) throws Exception, IOException {
+//	/**
+//	 * Erstellt eine neue Sekretaerin. Laedt eine Datei. Laedt das NLP-Model fuer die gegebene Sprache
+//	 *  
+//	 * @param datei File: Zu ueberpruefende Datei
+//	 * @param sprache Sprache: Eine Instanz der Sprache der zu ueperpruefenden Datei
+//	 * @throws Exception
+//	 * @throws IOException
+//	 */
+//	public JosefsSekretaerin(File datei, Language sprache) throws Exception, IOException {
+//		this.sprache = sprache;
+//		
+//		OpenNlpSekretaerin.setInstanz(new OpenNlpSekretaerin(sprache));
+//		DocumentLoader loader = new PlainTextDocumentLoader();
+//		loader.loadFile(datei);
+//		dokument = bestimmeWortarten(loader.getLoadedDocument());
+//	}
+	
+	public JosefsSekretaerin(DocumentLoader documentLoader, Language sprache) throws IOException, HumbugException {
 		this.sprache = sprache;
-		
 		OpenNlpSekretaerin.setInstanz(new OpenNlpSekretaerin(sprache));
-		DocumentLoader loader = new PlainTextDocumentLoader();
-		loader.loadFile(datei);
-		dokument = bestimmeWortarten(loader.getLoadedDocument());
+//		documentLoader.loadFile(datei);
+		dokument = bestimmeWortarten(documentLoader.getLoadedDocument());
 	}
 
 	/**
