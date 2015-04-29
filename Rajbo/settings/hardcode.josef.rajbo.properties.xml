@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Last changed: 2014-07-01 21:05:50</comment>
+<!--
+<entry key=""></entry>
+-->
+<entry key="firststart">false</entry>
+
+<entry key="locale">de</entry>
+<entry key="#TITLE__locale">Language</entry>
+<entry key="#TYPE__locale">COMBO</entry>
+<entry key="#VALUES__locale">de, en</entry>
+
+<entry key="library_home">/home/michael/git/JosefsBibliothek/JosefsBibliothek</entry>
+<entry key="#TITLE__library_home">Library home</entry>
+<entry key="#TYPE__library_home">FILECHOOSER_DIRECTORY</entry>
+
+</properties>
