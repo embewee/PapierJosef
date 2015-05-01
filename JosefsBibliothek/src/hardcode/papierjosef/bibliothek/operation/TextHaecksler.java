@@ -5,12 +5,13 @@ import hardcode.papierjosef.model.document.TextElement;
 
 import java.util.List;
 
-public abstract class TextHaecksler<T extends TextElement<?>> extends Operation<T>{
+public abstract class TextHaecksler<T extends TextElement<?>> extends
+		Operation<T> {
 
 	private String rawText;
 	private List<String> output;
 	private Language sprache;
-	
+
 	public Language getSprache() {
 		return sprache;
 	}
@@ -19,19 +20,19 @@ public abstract class TextHaecksler<T extends TextElement<?>> extends Operation<
 		this.sprache = sprache;
 	}
 
-	public void setOutput(List<String> outs){
-		this.output=outs;
+	public void setOutput(List<String> outs) {
+		this.output = outs;
 	}
-	
-	public List<String> getOutput(){
+
+	public List<String> getOutput() {
 		return output;
 	}
-	
-	public void setRawText(String text){
-		this.rawText=text;
+
+	public void setRawText(String text) {
+		this.rawText = text;
 	}
-	
-	public String getRawText(){
+
+	public String getRawText() {
 		return this.rawText;
 	}
 }
