@@ -2,6 +2,7 @@ package hardcode.papierjosef.model.document;
 
 import hardcode.papierjosef.model.document.annotation.TextElementProperty;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import java.util.Set;
  * Every object in the document tree (containing e.g. paragraphs, sentences and
  * words) inherits from this abstract class. As such, it is easy to apply rules
  * to TextElements
+ * 
+ * 01.05.2015[dominik]: Kann mit dem geänderten C'tor und der Methode
+ * recalcStartEnd() jetzt auch bottom-up verwendet werden.
  * 
  * @param <T>
  *            Type of child elements. Example: For documents, Paragraph is the
@@ -40,7 +44,10 @@ public abstract class TextElement<T> {
 	 */
 	public TextElement(List<T> list, long start, long end)
 			throws HumbugException {
-		this.list = list;
+		if (list == null)
+			list = new ArrayList<T>();
+		else
+			this.list = list;
 		this.start = start;
 		this.end = end;
 		properties = new HashMap<String, TextElementProperty>();
@@ -178,4 +185,30 @@ public abstract class TextElement<T> {
 	 * @return String representation
 	 */
 	public abstract String getText();
+
+	/**
+	 * In bottom-up mode, this method calculates the start and end of this
+	 * element after manually adding child elements with addElement()
+	 * 
+	 * TODO: Das bezieht sich jetzt nur auf den bereits gefilterten Text, die
+	 * Residualen müssen dann mit start auch auf den bereits gefilterten Text
+	 * geeicht sein, also:
+	 * 
+	 * "Das ist ein \emph{Test}": ^ ^ A B A: Pos: 12 (17) B: Pos: 15 (21)
+	 * 
+	 * TODO: Cast zu TextElement unsauber!!!
+	 * 
+	 * 
+	 */
+	@SuppressWarnings("rawtypes")
+	public void recalcStartEnd() {
+		if (this.list.size() != 0) {
+			this.start = ((TextElement) this.list.get(0)).getStart();
+			this.start = ((TextElement) this.list.get(this.list.size() - 1))
+					.getEnd();
+		} else {
+			this.start = 0;
+			this.end = getText().length();
+		}
+	}
 }
