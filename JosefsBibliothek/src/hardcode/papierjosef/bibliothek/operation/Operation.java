@@ -5,12 +5,9 @@ import java.lang.reflect.ParameterizedType;
 import hardcode.papierjosef.model.document.TextElement;
 
 
-@SuppressWarnings("rawtypes")
 public abstract class Operation<T extends TextElement> {
 	
 	private Class<T> type;
-	
-	//TODO: RegelName und RegelBeschreibung einfuegen
 	
 	@SuppressWarnings("unchecked")
 	public Operation() {
