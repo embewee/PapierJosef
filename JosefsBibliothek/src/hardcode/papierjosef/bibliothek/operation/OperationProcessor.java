@@ -14,16 +14,10 @@ public class OperationProcessor {
 
 	private OperationProcessor(){}
 	
-	
-	public static void execute(OperationenKette kette, Document document) {
-		//kette.get
-		
-		
-		
+	public static void execute(OperationChain chain, Document document) throws HumbugException {
+		execute(chain.getChain(), document);
 	}
-	
-	
-	
+		
 	public static void execute(List<Operation<?>> operations, Document document) throws HumbugException {
 		for(Operation<?> op : operations) {
 			execute(op, document);
@@ -116,10 +110,4 @@ public class OperationProcessor {
 	private static void executeInternal (Operation op, Punctuation patiens){
 		op.fuehreAus(patiens);
 	}
-	
-
-	
-	
-
-	
 }
