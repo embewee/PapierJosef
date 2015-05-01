@@ -1,6 +1,6 @@
 package hardcode.papierjosef.bibliothek.loader;
 
-import hardcode.papierjosef.bibliothek.exception.BibliotheksZwischenfall;
+import hardcode.papierjosef.bibliothek.exception.LibraryException;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +22,10 @@ public class LadeKlasse<T> {
 	 * @param pfad File: Pfad zum Ordner, in dem sich die Klassendatei befindet
 	 * @param klassenName String: Name der Klassendatei, ohne .class, also z.B. nur "Klassenname".
 	 * @return T: Die geladene Klasse
-	 * @throws BibliotheksZwischenfall
+	 * @throws LibraryException
 	 */
 	@SuppressWarnings("unchecked")
-	public T ladeKlasse(File pfad, String klassenName) throws BibliotheksZwischenfall  {
+	public T ladeKlasse(File pfad, String klassenName) throws LibraryException  {
 		T object = null;
 		try{	
 			URL url = pfad.toURI().toURL();		
@@ -35,15 +35,15 @@ public class LadeKlasse<T> {
 			object = (T) c.newInstance();
 			loader.close();
 		} catch (MalformedURLException e) {
-			throw new BibliotheksZwischenfall("MalformedURLException");
+			throw new LibraryException("MalformedURLException");
 		} catch (ClassNotFoundException e) {
-			throw new BibliotheksZwischenfall("ClassNotFoundException");
+			throw new LibraryException("ClassNotFoundException");
 		} catch (IOException e) {
-			throw new BibliotheksZwischenfall("IOException");
+			throw new LibraryException("IOException");
 		} catch (InstantiationException e) {
-			throw new BibliotheksZwischenfall("InstantiationException");
+			throw new LibraryException("InstantiationException");
 		} catch (IllegalAccessException e) {
-			throw new BibliotheksZwischenfall("IllegalAccessException");
+			throw new LibraryException("IllegalAccessException");
 		}
 		return object;
 	}

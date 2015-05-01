@@ -1,36 +1,29 @@
 package hardcode.papierjosef.bibliothek;
 
 
-import hardcode.papierjosef.bibliothek.assistenz.JosefsSekretaerin;
-import hardcode.papierjosef.bibliothek.sprachen.Deutsch;
-import hardcode.papierjosef.bibliothek.statistik.GrundlegendeStatistik;
-
 import java.io.File;
 import java.io.IOException;
 
 //TODO: make singleton
 
-public class JosefsFassade implements LibraryFacade{
+public class PapierJosefFacade {
 
-	@Override
 	public void readDocument(File file) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public String evaluate() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void analyze() {
 		// TODO Auto-generated method stub
 		
 	}
 	private File appDir; //user application execution directory
-	public JosefsFassade(File appDir) {
+	public PapierJosefFacade(File appDir) {
 		this.appDir = appDir;
 	}
 	

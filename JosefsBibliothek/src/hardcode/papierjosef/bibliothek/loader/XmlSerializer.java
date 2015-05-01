@@ -1,6 +1,6 @@
 package hardcode.papierjosef.bibliothek.loader;
 
-import hardcode.papierjosef.bibliothek.exception.BibliotheksZwischenfall;
+import hardcode.papierjosef.bibliothek.exception.LibraryException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +25,7 @@ public class XmlSerializer <T>{
 		return xstream.toXML(t);
 	}
 	
-	public void serializeToFile(T t, File file) throws BibliotheksZwischenfall {
+	public void serializeToFile(T t, File file) throws LibraryException {
 		String xml = serialize(t);
 		saveTextFile(file, xml);
 	}
@@ -35,13 +35,13 @@ public class XmlSerializer <T>{
 		return (T) o;
 	}
 	
-	public T deserialize(File file) throws BibliotheksZwischenfall {
+	public T deserialize(File file) throws LibraryException {
 		String xml = loadTextFile(file);
 		Object o = xstream.fromXML(xml);
 		return (T) o;
 	}
 	
-	private String loadTextFile(File file) throws BibliotheksZwischenfall {
+	private String loadTextFile(File file) throws LibraryException {
 		String text = null;
 		BufferedReader br = null;
 		try {
@@ -56,20 +56,20 @@ public class XmlSerializer <T>{
 	        }
 	        text = sb.toString();
 	    } catch (FileNotFoundException e) {
-			throw new BibliotheksZwischenfall("FileNotFoundException");
+			throw new LibraryException("FileNotFoundException");
 		} catch (IOException e) {
-			throw new BibliotheksZwischenfall("IOException");
+			throw new LibraryException("IOException");
 		} finally {
 	        try {
 				br.close();
 			} catch (IOException e) {
-				throw new BibliotheksZwischenfall("IOException");
+				throw new LibraryException("IOException");
 			}
 	    }
 	    return text;
 	}
 	
-	private void saveTextFile(File file, String text) throws BibliotheksZwischenfall {
+	private void saveTextFile(File file, String text) throws LibraryException {
 		BufferedWriter writer = null;
 		try
 		{
@@ -78,7 +78,7 @@ public class XmlSerializer <T>{
 		}
 		catch ( IOException e)
 		{
-			throw new BibliotheksZwischenfall("IOException");
+			throw new LibraryException("IOException");
 		}
 		finally
 		{
@@ -89,7 +89,7 @@ public class XmlSerializer <T>{
 		    }
 		    catch ( IOException e)
 		    {
-		    	throw new BibliotheksZwischenfall("IOException");
+		    	throw new LibraryException("IOException");
 		    }
 		}
 	}
