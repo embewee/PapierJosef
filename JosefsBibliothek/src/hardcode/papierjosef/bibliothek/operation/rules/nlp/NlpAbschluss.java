@@ -30,29 +30,27 @@ public class NlpAbschluss extends TextHaecksler<Document> {
 	 */
 	@Override
 	public void fuehreAus(Document d) {
-
-		/*
-		 * HIER MUSS DAS GEMACHT WERDEN "DAS" bezieht sich auf Punctuation und
-		 * Residuals
-		 */
-
-		Iterator<Residual> rit = residuals.iterator();
 		int pos = 0;
-		for (Paragraph p : d.getChildElements()) {
-			for (Sentence s : p.getChildElements()) {
-				ListIterator<Token> it = s.getChildElements().listIterator();
-				Token t = it.next();
-				Residual r = rit.next();
+		if (residuals != null && residuals.size() > 1) {
+			Iterator<Residual> rit = residuals.iterator();
 
-				while (it.hasNext()) {
-					if (rit.hasNext()) {
-						if (r.getStart() <= pos) {
-							it.add(r);
-							r = rit.next();
+			for (Paragraph p : d.getChildElements()) {
+				for (Sentence s : p.getChildElements()) {
+					ListIterator<Token> it = s.getChildElements()
+							.listIterator();
+					Token t = it.next();
+					Residual r = rit.next();
+
+					while (it.hasNext()) {
+						if (rit.hasNext()) {
+							if (r.getStart() <= pos) {
+								it.add(r);
+								r = rit.next();
+							}
 						}
+						pos += t.getText().length() + 1;
+						t = it.next();
 					}
-					pos += t.getText().length() + 1;
-					t = it.next();
 				}
 			}
 		}

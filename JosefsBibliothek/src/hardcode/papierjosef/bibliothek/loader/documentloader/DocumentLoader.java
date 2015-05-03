@@ -15,7 +15,7 @@ public class DocumentLoader {
 		String extension = file.getName().substring(file.getName().lastIndexOf(".")).toLowerCase();
 		
 		switch(extension) {
-			case "txt":
+			case ".txt":
 				String content = loadPlainTextFile(file);
 				LoadedDocument ld = new LoadedDocument(content, extension);
 				return ld;
@@ -27,11 +27,10 @@ public class DocumentLoader {
 
 	private static String loadPlainTextFile(File file) throws IOException {
 		// TODO: no such file exception
+		StringBuilder sb = new StringBuilder();
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		try {
-			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
-
 			while (line != null) {
 				sb.append(line);
 				sb.append(System.lineSeparator());
@@ -40,7 +39,6 @@ public class DocumentLoader {
 		} finally {
 			br.close();
 		}
-		
-		return br.toString();
+		return sb.toString();
 	}
 }

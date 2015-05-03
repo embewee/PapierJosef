@@ -26,7 +26,8 @@ public class Sentence extends TextElement<Token> {
 		for (Token token : getChildElements()) {
 			if((lastToken != null) && (lastToken.getEnd() < token.getStart())) {
 				long n  = token.getStart() - lastToken.getEnd();
-				buf.append(String.format("%1$" + n + "s", " "));
+//				buf.append(String.format("%1$" + n + "s", " "));
+				buf.append(' ');
 			}
 			buf.append(token.getText());
 			lastToken = token;

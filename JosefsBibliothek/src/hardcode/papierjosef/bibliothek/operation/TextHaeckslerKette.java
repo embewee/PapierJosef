@@ -4,6 +4,8 @@ import hardcode.papierjosef.bibliothek.operation.rules.nlp.NlpAbschluss;
 import hardcode.papierjosef.bibliothek.operation.rules.nlp.Paragraphizer;
 import hardcode.papierjosef.bibliothek.operation.rules.nlp.SentenceDetector;
 import hardcode.papierjosef.bibliothek.operation.rules.nlp.TokenDetector;
+import hardcode.papierjosef.bibliothek.sprachen.Deutsch;
+import hardcode.papierjosef.bibliothek.sprachen.Language;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.model.document.Paragraph;
@@ -23,6 +25,12 @@ public class TextHaeckslerKette {
 			SentenceDetector s = new SentenceDetector();
 			TokenDetector t = new TokenDetector();
 			NlpAbschluss n = new NlpAbschluss();
+
+			Language deutsch = new Deutsch();
+			p.setSprache(deutsch);
+			s.setSprache(deutsch);
+			t.setSprache(deutsch);
+			n.setSprache(deutsch);
 
 			p.setRawText(plainText);
 			p.fuehreAus(d);

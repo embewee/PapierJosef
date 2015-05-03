@@ -45,7 +45,7 @@ public abstract class TextElement<T> {
 	public TextElement(List<T> list, long start, long end)
 			throws HumbugException {
 		if (list == null)
-			list = new ArrayList<T>();
+			this.list = new ArrayList<T>();
 		else
 			this.list = list;
 		this.start = start;
