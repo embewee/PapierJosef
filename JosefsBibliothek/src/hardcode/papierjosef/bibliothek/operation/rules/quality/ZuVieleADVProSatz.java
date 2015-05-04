@@ -16,7 +16,7 @@ public class ZuVieleADVProSatz extends Regel<Sentence> {
 	public void fuehreAus(Sentence t) {
 		String ADV = "ADV";
 		int nrOfAdv = 0;
-		for(Word w : t.getWordsOnly()) {
+		for(Word w : t.getWordsOnly()	) {
 			if(w.getPartOfSpeech().getPartOfSpeechName().equals(ADV))
 				nrOfAdv++;
 		}

@@ -1,7 +1,7 @@
 package hardcode.papierjosef.model.document;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a Sentence. A Sentence contains Words. Sentences are contained by
@@ -34,7 +34,7 @@ public class Sentence extends TextElement<Token> {
 		StringBuffer buf = new StringBuffer();
 		for (Token token : getChildElements()) {
 			if ((lastToken != null) && (lastToken.getEnd() < token.getStart())) {
-				long n = token.getStart() - lastToken.getEnd();
+				// long n = token.getStart() - lastToken.getEnd();
 				// buf.append(String.format("%1$" + n + "s", " "));
 				buf.append(' ');
 			}
@@ -45,11 +45,7 @@ public class Sentence extends TextElement<Token> {
 	}
 
 	public List<Word> getWordsOnly() {
-		List<Token> t = getChildElements();
-		List<Word> result = new ArrayList<Word>();
-		for (Token tok : t)
-			if (tok instanceof Word)
-				result.add((Word) tok);
-		return result;
+		return getChildElements().stream().filter(u -> u instanceof Word)
+				.map(c -> (Word) c).collect(Collectors.toList());
 	}
 }
