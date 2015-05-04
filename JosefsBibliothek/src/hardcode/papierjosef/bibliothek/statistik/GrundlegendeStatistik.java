@@ -1,37 +1,29 @@
 package hardcode.papierjosef.bibliothek.statistik;
 
+import hardcode.papierjosef.model.document.Document;
 
-public class GrundlegendeStatistik extends Statistik{
+public class GrundlegendeStatistik extends Statistik<Document> {
+
+	private Report report;
 
 	@Override
-	public void fuehreAus(Object t) {
-		// TODO Auto-generated method stub
-		
+	public Report getReport() {
+		return report;
 	}
-//	private int zahlDerAbsaetze;
-//	private int zahlDerSaetze;
-//	private int zahlDerWoerter;
-//
-//	public void errechne(Dokument dokument){
-//		zahlDerAbsaetze = dokument.getAbsaetze().size();
-//		
-//		zahlDerSaetze = 0;
-//		zahlDerWoerter = 0;		
-//		
-//		for (Absatz absatz : dokument.getAbsaetze()) {
-//			zahlDerSaetze += absatz.getSaetze().size();
-//			
-//			for(Satz satz : absatz.getSaetze()) {
-//				zahlDerWoerter += satz.getWoerter().size();
-//			}
-//
-//		}
-//		
-//		//dokument.absaetze.each { it.saetze.each{ zahlDerWoerter+=it.woerter.findAll{!it.wortart.equals(Wortart.XKOMMA) && !it.wortart.equals(Wortart.XSATZENDE) && !it.wortart.equals(Wortart.XSONST)}.size()}};
-//	}
-//	
-//	@Override
-//	public String toString() {
-//		return "GrundlegendeStatistik [zahlDerAbsaetze=" + zahlDerAbsaetze + ", zahlDerSaetze=" + zahlDerSaetze + ", zahlDerWoerter=" + zahlDerWoerter + "]";
-//	}
+
+	@Override
+	public void fuehreAus(Document t) {
+		report.put("zahlDerAbsaetze", t.getChildElements().size());
+		report.put(
+				"zahlDerSaetze",
+				t.getChildElements().stream()
+						.mapToInt(p -> p.getChildElements().size())
+						.reduce(Integer::sum));
+		report.put(
+				"zahlDerWoerter",
+				t.getChildElements().stream().map(p -> p.getChildElements())
+						.flatMap((l) -> l.stream())
+						.map(s -> s.getWordsOnly().size()).reduce(Integer::sum));
+
+	}
 }

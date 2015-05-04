@@ -151,7 +151,6 @@ public class AnalyzeTab extends BaseTab {
 												.getChildElements(),
 										op.getProperty(), op.getType());
 					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					historyModel.remove(index);
