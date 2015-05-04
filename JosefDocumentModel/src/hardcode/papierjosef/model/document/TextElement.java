@@ -208,7 +208,7 @@ public abstract class TextElement<T> {
 					.getEnd();
 		} else {
 			this.start = 0;
-			this.end = getText().length();
+			this.end = getText().length()-1;
 		}
 	}
 }

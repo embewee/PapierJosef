@@ -14,7 +14,7 @@ import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.KorrelatSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
-import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlicherSatz;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlichesPronomen;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
@@ -41,7 +41,7 @@ public class PapierJosefFacade {
 		list.add(new KorrelatSatz());
 		list.add(new LangeSaetzeRegel());
 		list.add(new PassivSatz());
-		list.add(new UnpersoenlicherSatz());
+		list.add(new UnpersoenlichesPronomen());
 		list.add(new ZuVieleADVProSatz());
 		return list;
 	}
