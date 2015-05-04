@@ -81,10 +81,7 @@ public class WindowController {
 	}
 	
 	private void insertSideBarAnalyzeTab() {
-		Vector<String> languages = new Vector<>();
-		
-		//TODO: collect languages
-		languages.add("Deutsch");
+		//TODO
 		
 		window.getSideBarUI().insertAnalyzePanel(languages, new BtnAnalyzeListener());
 	}
