@@ -30,17 +30,9 @@ public class Sentence extends TextElement<Token> {
 
 	@Override
 	public String getText() {
-		Token lastToken = null;
 		StringBuffer buf = new StringBuffer();
 		for (Token token : getChildElements()) {
-			// if ((lastToken != null) && (lastToken.getEnd() <
-			// token.getStart())) {
-			// // long n = token.getStart() - lastToken.getEnd();
-			// // buf.append(String.format("%1$" + n + "s", " "));
-			// buf.append(' ');
-			// }
 			buf.append(token.getText());
-			// lastToken = token;
 		}
 		return buf.toString();
 	}
