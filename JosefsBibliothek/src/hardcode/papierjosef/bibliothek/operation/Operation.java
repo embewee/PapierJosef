@@ -20,4 +20,9 @@ public abstract class Operation<T> {
 	}
 	
 	public abstract void fuehreAus(T t);
+	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 }

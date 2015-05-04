@@ -3,6 +3,7 @@ package hardcode.papierjosef.rajbo.controller;
 import hardcode.papierjosef.rajbo.Environment;
 import hardcode.papierjosef.rajbo.view.AnalyzeTab;
 import hardcode.papierjosef.rajbo.view.LoadTab;
+import hardcode.papierjosef.rajbo.view.StatisticsTab;
 import hardcode.papierjosef.rajbo.view.Window;
 import hardcode.preferences.PreferencesController;
 
@@ -22,8 +23,10 @@ public class WindowController {
 		window = new Window(environment);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setTitle(windowTitle);
+		
 		window.getSideBarUI().insertTab(new LoadTab(environment));
 		window.getSideBarUI().insertTab(new AnalyzeTab(environment));
+		window.getSideBarUI().insertTab(new StatisticsTab(environment));
 
 		// //TODO: weg
 		// JPanel testPanel = new JPanel();

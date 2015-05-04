@@ -8,13 +8,22 @@ import hardcode.papierjosef.bibliothek.loader.documentloader.LoadedDocument;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
 import hardcode.papierjosef.bibliothek.operation.OperationProcessor;
+import hardcode.papierjosef.bibliothek.operation.Regel;
 import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.KorrelatSatz;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlicherSatz;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
+import hardcode.papierjosef.model.document.TextElement;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -25,6 +34,16 @@ public class PapierJosefFacade {
 	private LoadedDocument loadedDocument;
 	private Document document;
 
+	public Vector<Regel<? extends TextElement<?>>> getInternalRules() {
+		Vector<Regel<? extends TextElement<?>>> list = new Vector<>();
+		list.add(new KorrelatSatz());
+		list.add(new LangeSaetzeRegel());
+		list.add(new PassivSatz());
+		list.add(new UnpersoenlicherSatz());
+		list.add(new ZuVieleADVProSatz());
+		return list;
+	}
+	
 	public void readDocument(File file) throws IOException, LibraryException,
 			OperationNotSupportedException {
 		loadedDocument = DocumentLoader.loadFile(file);
