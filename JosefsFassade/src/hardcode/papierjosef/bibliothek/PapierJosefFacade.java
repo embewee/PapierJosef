@@ -30,6 +30,11 @@ import java.util.Vector;
 import javax.naming.OperationNotSupportedException;
 
 //TODO: make singleton
+/*TODO:	Fassade soll sich merken, welche Operationen, ... schon ausgefuehrt wurden,
+ * so dass dieselbe ~ nicht mehrfach ausgefuehrt werden kann - erst, nachdem sie wieder
+ * entfernt wurde.
+ */
+
 
 public class PapierJosefFacade {
 

@@ -12,14 +12,19 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.text.BadLocationException;
 
 public class AnalyzeTab extends BaseTab {
@@ -31,6 +36,8 @@ public class AnalyzeTab extends BaseTab {
 
 	private JComboBox<OperationChain> comboChains;
 	private JButton btnExecuteChain;
+
+	private DefaultListModel<Operation> historyModel;
 
 	public AnalyzeTab(Environment e) {
 		super(e);
@@ -58,6 +65,7 @@ public class AnalyzeTab extends BaseTab {
 				Regel rule = (Regel) comboRules.getSelectedItem();
 				try {
 					getEnvironment().getLibrary().executeOperation(rule);
+					historyModel.add(0, rule);
 					getEnvironment()
 							.getWindow()
 							.getTextUI()
@@ -92,6 +100,8 @@ public class AnalyzeTab extends BaseTab {
 				RuleChain chain = (RuleChain) comboChains.getSelectedItem();
 				try {
 					getEnvironment().getLibrary().executeOperationChain(chain);
+					// TODO FIXME
+					// historyModel.add(0, chain);
 					for (String property : chain.getProperties()) {
 						getEnvironment()
 								.getWindow()
@@ -118,18 +128,44 @@ public class AnalyzeTab extends BaseTab {
 		btnLoadExternal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loadExternalRule();
+				loadAndExecuteExternalRule();
 			}
 		});
 
 		externalPane.add(btnLoadExternal);
 
+		historyModel = new DefaultListModel<Operation>();
+		JList<Operation> history = new JList<Operation>(historyModel);
+		history.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent ev) {
+				JList<Operation> list = (JList<Operation>) ev.getSource();
+				if (ev.getClickCount() == 2) {
+					int index = list.locationToIndex(ev.getPoint());
+					Regel op = (Regel) historyModel.get(index);
+					try {
+						getEnvironment()
+								.getWindow()
+								.getTextUI()
+								.clearHighlight(
+										getEnvironment().getLibrary().getDocument()
+												.getChildElements(),
+										op.getProperty(), op.getType());
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					historyModel.remove(index);
+				}
+			}
+		});
+
 		add(paneRules);
 		add(paneChains);
 		add(externalPane);
+		add(new JScrollPane(history));
 	}
-	
-	private void loadExternalRule() {
+
+	private void loadAndExecuteExternalRule() {
 		File file = chooseFile();
 		Operation<?> op = null;
 		try {
@@ -138,20 +174,20 @@ public class AnalyzeTab extends BaseTab {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		int res = JOptionPane.showConfirmDialog(this, "Execute rule '" + op + "'");
-		if(res == JOptionPane.YES_OPTION) {
+
+		int res = JOptionPane.showConfirmDialog(this, "Execute rule '" + op
+				+ "'");
+		if (res == JOptionPane.YES_OPTION) {
 			try {
 				getEnvironment().getLibrary().executeOperation(op);
+				historyModel.add(0, op);
 				getEnvironment().getLibrary().printDocument();
 			} catch (HumbugException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
+
 	private File chooseFile() {
 		final JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -169,12 +205,6 @@ public class AnalyzeTab extends BaseTab {
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
 
 	@Override
 	String getTitleKey() {
