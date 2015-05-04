@@ -1,7 +1,7 @@
 package hardcode.papierjosef.rajbo.view;
 
 import hardcode.papierjosef.rajbo.Application;
-import hardcode.papierjosef.rajbo.PreferencesProvider;
+import hardcode.papierjosef.rajbo.Environment;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,16 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 import javax.swing.Box;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
@@ -29,7 +26,7 @@ public class Window extends JFrame {
 	
 	private JFrame me;
 	private JMenuBar menuBar;
-	private PreferencesProvider provider;
+	private Environment environment;
 	
 	private TextUI textUI;
 	private SideBarUI sideBarUI;	
@@ -40,9 +37,9 @@ public class Window extends JFrame {
 	private JMenuItem menuItemExit;
 	private JMenuItem menuItemOperations;
 	
-	public Window(PreferencesProvider provider) {
+	public Window(Environment environment) {
 		me = this;
-		this.provider = provider;		
+		this.environment = environment;		
 		BorderLayout borderLayoutManager = new BorderLayout();
 		setLayout(borderLayoutManager);
 		insertMenu();
@@ -57,7 +54,7 @@ public class Window extends JFrame {
 	
 	public void insertUIElements() {
 		textUI = new TextUI();
-		sideBarUI = new SideBarUI(provider);
+		sideBarUI = new SideBarUI(environment);
 		JScrollPane textAreaScroll = new JScrollPane(textUI, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textAreaScroll, sideBarUI);
 		splitPane.setOneTouchExpandable(true);
@@ -79,29 +76,29 @@ public class Window extends JFrame {
 	private void insertMenu() {
 		menuBar = new JMenuBar();
 		
-		JMenu appMenu = new JMenu(provider.getLocaleString("menu_application"));
+		JMenu appMenu = new JMenu(environment.getLocaleString("menu_application"));
 		menuBar.add(appMenu);
 
-		menuItemLoad = new JMenuItem(provider.getLocaleString("menuitem_load"));
+		menuItemLoad = new JMenuItem(environment.getLocaleString("menuitem_load"));
 		appMenu.add(menuItemLoad);
 		
-		menuItemSave = new JMenuItem(provider.getLocaleString("menuitem_save"));
+		menuItemSave = new JMenuItem(environment.getLocaleString("menuitem_save"));
 		appMenu.add(menuItemSave);
 		
 		appMenu.addSeparator();
 		
-		menuItemPreferences = new JMenuItem(provider.getLocaleString("menuitem_preferences"));
+		menuItemPreferences = new JMenuItem(environment.getLocaleString("menuitem_preferences"));
 		appMenu.add(menuItemPreferences);
 		
 		appMenu.addSeparator();
 		
-		menuItemExit = new JMenuItem(provider.getLocaleString("menuitem_exit"));
+		menuItemExit = new JMenuItem(environment.getLocaleString("menuitem_exit"));
 		appMenu.add(menuItemExit);
 		
-		JMenu operationsMenu = new JMenu(provider.getLocaleString("menu_operations"));
+		JMenu operationsMenu = new JMenu(environment.getLocaleString("menu_operations"));
 		menuBar.add(operationsMenu);
 		
-		menuItemOperations = new JMenuItem(provider.getLocaleString("menuitem_operations"));
+		menuItemOperations = new JMenuItem(environment.getLocaleString("menuitem_operations"));
 		operationsMenu.add(menuItemOperations);
 		
 		menuBar.add(Box.createHorizontalGlue());
@@ -109,7 +106,7 @@ public class Window extends JFrame {
 		JMenu helpMenu = new JMenu("?");
 		menuBar.add(helpMenu);
 
-		JMenuItem helpItem = new JMenuItem(provider.getLocaleString("menuitem_help"));
+		JMenuItem helpItem = new JMenuItem(environment.getLocaleString("menuitem_help"));
 		helpItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +128,7 @@ public class Window extends JFrame {
 		});
 		helpMenu.add(helpItem);
 		
-		JMenuItem aboutItem = new JMenuItem(provider.getLocaleString("menuitem_about"));
+		JMenuItem aboutItem = new JMenuItem(environment.getLocaleString("menuitem_about"));
 		aboutItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

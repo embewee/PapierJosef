@@ -1,5 +1,7 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.rajbo.Environment;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,13 +25,13 @@ public class AnalyzeTab extends BaseTab {
 	void init() {
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel lblLanguage = new JLabel(getEnvironment().getProvider().getLocaleString("sidebar_analyze_lblLanguage"));
+		JLabel lblLanguage = new JLabel(getEnvironment().getLocaleString("sidebar_analyze_lblLanguage"));
 		add(lblLanguage);
 
 		comboLanguage = new JComboBox<>(getEnvironment().getLanguages());
 		add(comboLanguage);
 
-		btnAnalyze = new JButton(getEnvironment().getProvider().getLocaleString("sidebar_analyze_btnAnalyze"));
+		btnAnalyze = new JButton(getEnvironment().getLocaleString("sidebar_analyze_btnAnalyze"));
 		btnAnalyze.addActionListener(new ActionListener() {
 			
 			@Override

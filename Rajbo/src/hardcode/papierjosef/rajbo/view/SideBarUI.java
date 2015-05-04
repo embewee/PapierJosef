@@ -1,19 +1,19 @@
 package hardcode.papierjosef.rajbo.view;
 
-import hardcode.papierjosef.rajbo.PreferencesProvider;
+import hardcode.papierjosef.rajbo.Environment;
 
 import javax.swing.JTabbedPane;
 
 public class SideBarUI extends JTabbedPane {
 	
-	private PreferencesProvider provider;
+	private Environment environment;
 	
-	public SideBarUI(PreferencesProvider provider) {
-		this.provider = provider;
+	public SideBarUI(Environment environment) {
+		this.environment = environment;
 	}
 	
 	public void insertTab(BaseTab tab) {
-		this.addTab(provider.getLocaleString(tab.getTitleKey()), tab);
+		this.addTab(environment.getLocaleString(tab.getTitleKey()), tab);
 	}
 	
 	

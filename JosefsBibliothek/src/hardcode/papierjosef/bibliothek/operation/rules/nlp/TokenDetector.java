@@ -26,10 +26,12 @@ public class TokenDetector extends TextHaecksler<Sentence> {
 	 * Residual und Punctuation werden in NlpAbschluss eingefügt
 	 */
 	@Override
+	// #FIXME
 	public void fuehreAus(Sentence s) {
 		String pfad = System.getProperty("user.dir") + File.separator
-				+ "sprachen" + File.separator + getSprache().getLanguage()
-				+ File.separator + "nlpmodels/" + getSprache().getLanguage();
+				+ "../JosefsBibliothek" + File.separator + "sprachen"
+				+ File.separator + getSprache().getLanguage() + File.separator
+				+ "nlpmodels/" + getSprache().getLanguage();
 		try {
 			InputStream tokenModelIn = new FileInputStream(pfad + "-token.bin");
 			InputStream posModelIn = new FileInputStream(pfad

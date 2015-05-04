@@ -18,10 +18,13 @@ import opennlp.tools.util.InvalidFormatException;
 public class SentenceDetector extends TextHaecksler<Paragraph> {
 
 	@Override
+	// #FIXME
+	// Pfad is scheiße, so n quatsch mit ../ wollen wir nicht
 	public void fuehreAus(Paragraph t) {
 		String pfad = System.getProperty("user.dir") + File.separator
-				+ "sprachen" + File.separator + getSprache().getLanguage()
-				+ File.separator + "nlpmodels/" + getSprache().getLanguage();
+				+ "../JosefsBibliothek" + File.separator + "sprachen"
+				+ File.separator + getSprache().getLanguage() + File.separator
+				+ "nlpmodels/" + getSprache().getLanguage();
 		try {
 			FileInputStream sentModelIn = new FileInputStream(pfad
 					+ "-sent.bin");

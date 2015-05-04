@@ -1,5 +1,8 @@
 package hardcode.preferences;
 
+import hardcode.preferences.PreferencesModel;
+import hardcode.preferences.PreferencesWindow;
+import hardcode.preferences.SettingsEntry;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +17,9 @@ import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+
+
+
 
 public class PreferencesController {
 	public final static String PREFIX = "#";

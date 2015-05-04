@@ -1,5 +1,7 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.rajbo.Environment;
+
 import javax.swing.JPanel;
 
 public abstract class BaseTab extends JPanel {
