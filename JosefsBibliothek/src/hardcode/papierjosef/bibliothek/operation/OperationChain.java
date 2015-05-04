@@ -12,20 +12,20 @@ import java.util.List;
  * ausgefuehrt werden.
  *
  */
-public class OperationChain implements Marking {
+public abstract class OperationChain<T extends Operation> {
 
 	private String chainName;
 	// private String chainDescription;
 
-	private List<Operation<?>> operations;
+	private List<T> operations;
 
 	public OperationChain() {
-		operations = new LinkedList<Operation<?>>();
+		operations = new LinkedList<T>();
 		chainName = null;
 		// chainDescription = null;
 	}
 
-	public void addOperation(Operation<?> name) {
+	public void addOperation(T name) {
 		operations.add(name);
 	}
 
@@ -44,24 +44,9 @@ public class OperationChain implements Marking {
 	public String getName() {
 		return chainName;
 	}
-
+	
 	//
 	// public String getBeschreibung() {
 	// return operationenKetteBeschreibung;
 	// }
-
-	@Override
-	public List<String> getProperties() {
-		List<String> result = new ArrayList<String>();
-		operations.forEach(o -> result.addAll(((Marking) o).getProperties()));
-		return result;
-	}
-
-	@Override
-	// #FIXME
-	// Wie soll das denn gehn?
-	public Class<? extends TextElement>  getLevel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

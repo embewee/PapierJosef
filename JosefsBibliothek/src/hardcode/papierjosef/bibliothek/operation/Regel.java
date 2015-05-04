@@ -9,7 +9,8 @@ import hardcode.papierjosef.model.document.TextElement;
  * @param <T>
  *            Document, Paragraph, Sentence oder Word des DocumentModel
  */
-public abstract class Regel<T extends TextElement<?>> extends Operation<T>
-		implements Marking {
-
+public abstract class Regel<T extends TextElement<?>> extends Operation<T> {
+	// #FIXME
+	// Sollte auch auf mehrere Properties anwendbar sein
+	public abstract String getProperty();
 }

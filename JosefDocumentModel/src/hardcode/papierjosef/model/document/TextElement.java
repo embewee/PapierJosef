@@ -204,7 +204,7 @@ public abstract class TextElement<T> {
 	public void recalcStartEnd() {
 		if (this.list.size() != 0) {
 			this.start = ((TextElement) this.list.get(0)).getStart();
-			this.start = ((TextElement) this.list.get(this.list.size() - 1))
+			this.end = ((TextElement) this.list.get(this.list.size() - 1))
 					.getEnd();
 		} else {
 			this.start = 0;

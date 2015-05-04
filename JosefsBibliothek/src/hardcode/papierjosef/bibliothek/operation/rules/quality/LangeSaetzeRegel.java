@@ -1,11 +1,7 @@
 package hardcode.papierjosef.bibliothek.operation.rules.quality;
 
-import java.util.Arrays;
-import java.util.List;
-
 import hardcode.papierjosef.bibliothek.operation.Regel;
 import hardcode.papierjosef.model.document.Sentence;
-import hardcode.papierjosef.model.document.TextElement;
 import hardcode.papierjosef.model.document.annotation.TextElementProperty;
 
 public class LangeSaetzeRegel extends Regel<Sentence> {
@@ -18,14 +14,8 @@ public class LangeSaetzeRegel extends Regel<Sentence> {
 			t.addProperty(tep);
 		}
 	}
-
-	@Override
-	public List<String> getProperties() {
-		return Arrays.asList("LONG_SENTENCE");
-	}
-
-	@Override
-	public Class<? extends TextElement> getLevel() {
-		return Sentence.class;
+	
+	public String getProperty(){
+		return "LONG_SENTENCE";
 	}
 }
