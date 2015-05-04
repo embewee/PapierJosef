@@ -11,12 +11,10 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.model.document.Paragraph;
-import hardcode.papierjosef.model.document.Punctuation;
 import hardcode.papierjosef.model.document.Sentence;
 import hardcode.papierjosef.model.document.TextElement;
 import hardcode.papierjosef.model.document.Token;
 
-import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
@@ -26,14 +24,16 @@ import org.junit.Test;
 
 public class IntegrationsTest {
 
-	private Document document;
+	private static Document document;
 	
 	@BeforeClass
-	public void pruefeFunktionalitaet() throws IOException, LibraryException {
+	public static void pruefeFunktionalitaet() throws IOException, LibraryException {
 		// #FIXME
+//		LoadedDocument d = DocumentLoader.loadFile(new File(
+//				"/media/dominik/Data/WorkspaceNew/PapierJosef/"
+//						+ "JosefsBibliothek/test-document-plain.txt"));
 		LoadedDocument d = DocumentLoader.loadFile(new File(
-				"/media/dominik/Data/WorkspaceNew/PapierJosef/"
-						+ "JosefsBibliothek/test-document-plain.txt"));
+				"test-document-plain.txt"));
 		Filtry f = new PlainTextFiltry();
 		f.setInputRawText(d.getText());
 		f.execute();
@@ -45,7 +45,7 @@ public class IntegrationsTest {
 	@Test
 	public void executeSomeOperation() throws HumbugException {
 		OperationProcessor.execute(new LangeSaetzeRegel(), document);
-		
+		printDocument();
 		
 	}
 	
@@ -54,15 +54,23 @@ public class IntegrationsTest {
 		printProperties(document);
 		
 		for (Paragraph p : document.getChildElements()) {
+			System.out.println("PARAGRAPH");
+			printProperties(p);
+			
 			for (Sentence s : p.getChildElements()) {
+				System.out.println("SENTENCE");
+				printProperties(s);
+				
 				for (Token t : s.getChildElements()) {
+					System.out.println("TOKEN");
 					printProperties(t);
+					
 				}
 			}
 		}
 	}
 	
-	public void printProperties(TextElement te) {
+	public void printProperties(TextElement<?> te) {
 		Set<String> keys = te.getPropertyKeys();
 		for(String key : keys) {
 			System.out.print("[" + key + ":" + te.getProperty(key) + "] ");
