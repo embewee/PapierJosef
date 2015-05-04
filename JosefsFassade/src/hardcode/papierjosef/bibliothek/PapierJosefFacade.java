@@ -16,6 +16,7 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlicherSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
+import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
@@ -49,6 +50,12 @@ public class PapierJosefFacade {
 		Vector<OperationChain> chains = new Vector<>();
 		//TODO: add chains
 		return chains;
+	}
+	
+	public Vector<Statistik<? extends TextElement<?>>> getInternalStatistics() {
+		Vector<Statistik<? extends TextElement<?>>> stats = new Vector<>();
+		//TODO: add stats
+		return stats;
 	}
 	
 	public void readDocument(File file) throws IOException, LibraryException,

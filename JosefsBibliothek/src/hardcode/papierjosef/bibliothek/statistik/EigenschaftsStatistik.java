@@ -2,6 +2,12 @@ package hardcode.papierjosef.bibliothek.statistik;
 
 
 public class EigenschaftsStatistik extends Statistik {
+
+	@Override
+	public void fuehreAus(Object t) {
+		// TODO Auto-generated method stub
+		
+	}
 //	private String stat;
 //	
 //
