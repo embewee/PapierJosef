@@ -1,47 +1,67 @@
 package hardcode.papierjosef.bibliothek.operation;
 
+import hardcode.papierjosef.model.document.TextElement;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Eine Operationenkette enthaelt die Namen mehrer Operationen, die aus aus Klassendateien
- * geladen und in der angegebenen Reihenfolge nacheinander ausgefuehrt werden. 
+ * Eine Operationenkette enthaelt die Namen mehrer Operationen, die aus aus
+ * Klassendateien geladen und in der angegebenen Reihenfolge nacheinander
+ * ausgefuehrt werden.
  *
  */
-public class OperationChain {
-	
+public class OperationChain implements Marking {
+
 	private String chainName;
-//	private String chainDescription;
-	
+	// private String chainDescription;
+
 	private List<Operation<?>> operations;
-	
+
 	public OperationChain() {
 		operations = new LinkedList<Operation<?>>();
 		chainName = null;
-//		chainDescription = null;
+		// chainDescription = null;
 	}
-	
+
 	public void addOperation(Operation<?> name) {
 		operations.add(name);
 	}
-	
+
 	public void setName(String name) {
 		this.chainName = name;
 	}
-	
-//	public void setOperationenKetteBeschreibung(String beschreibung) {
-//		this.operationenKetteBeschreibung = beschreibung;
-//	}
-	
+
+	// public void setOperationenKetteBeschreibung(String beschreibung) {
+	// this.operationenKetteBeschreibung = beschreibung;
+	// }
+
 	public List<Operation<?>> getChain() {
 		return java.util.Collections.unmodifiableList(operations);
 	}
-	
+
 	public String getName() {
 		return chainName;
 	}
-//	
-//	public String getBeschreibung() {
-//		return operationenKetteBeschreibung;
-//	}
+
+	//
+	// public String getBeschreibung() {
+	// return operationenKetteBeschreibung;
+	// }
+
+	@Override
+	public List<String> getProperties() {
+		List<String> result = new ArrayList<String>();
+		operations.forEach(o -> result.addAll(((Marking) o).getProperties()));
+		return result;
+	}
+
+	@Override
+	// #FIXME
+	// Wie soll das denn gehn?
+	public Class<? extends TextElement>  getLevel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

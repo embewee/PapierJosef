@@ -2,8 +2,14 @@ package hardcode.papierjosef.rajbo.view;
 
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.model.document.Paragraph;
+import hardcode.papierjosef.model.document.Sentence;
+import hardcode.papierjosef.model.document.Word;
 import hardcode.papierjosef.rajbo.Environment;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,6 +19,7 @@ import javax.naming.OperationNotSupportedException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
 
 public class LoadTab extends BaseTab {
 
@@ -24,6 +31,7 @@ public class LoadTab extends BaseTab {
 
 	@Override
 	void init() {
+		setLayout(new FlowLayout(FlowLayout.LEADING));
 		JButton btnLoad = new JButton(getEnvironment().getLocaleString(
 				"menuitem_load"));
 		btnLoad.addActionListener(new ActionListener() {
@@ -33,6 +41,33 @@ public class LoadTab extends BaseTab {
 		});
 		add(btnLoad);
 
+		JButton btnColor = new JButton(getEnvironment().getLocaleString(
+				"menuitem_color"));
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				colorVAFIN();
+			}
+		});
+		add(btnColor);
+	}
+
+	private void colorVAFIN() {
+		TextUI ui = getEnvironment().getWindow().getTextUI();
+		for (Paragraph p : getEnvironment().getLibrary().getDocument()
+				.getChildElements()) {
+			for (Sentence s : p.getChildElements()) {
+				for (Word w : s.getWordsOnly()) {
+					if (w.getPartOfSpeech().getPartOfSpeechName()
+							.equals("VAFIN"))
+						try {
+							ui.highlight(Color.ORANGE, (int) w.getStart(),
+									(int) w.getEnd() - 1);
+						} catch (BadLocationException e) {
+							e.printStackTrace();
+						}
+				}
+			}
+		}
 	}
 
 	private File chooseFile() {
@@ -62,7 +97,6 @@ public class LoadTab extends BaseTab {
 					"Erfolg", JOptionPane.INFORMATION_MESSAGE);
 			getEnvironment().getWindow().setTextUIText(
 					lib.getDocument().getText());
-			// lib.getDocument();
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(this, e1.getMessage(),
 					getEnvironment().getLocaleString("err_title"),

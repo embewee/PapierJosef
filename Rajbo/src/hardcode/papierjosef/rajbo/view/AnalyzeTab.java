@@ -43,7 +43,6 @@ public class AnalyzeTab extends BaseTab {
 				try {
 					getEnvironment().getLibrary().executeOperation(rule);
 				} catch (HumbugException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

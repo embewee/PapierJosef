@@ -61,7 +61,7 @@ public class NlpAbschluss extends TextHaecksler<Document> {
 				for (Token t : s.getChildElements()) {
 					t.setStart(pos);
 					t.setEnd(t.getText().length() + pos);
-					pos += t.getEnd();
+					pos = (int) t.getEnd();
 				}
 				s.recalcStartEnd();
 			}
