@@ -9,7 +9,7 @@ public class PassivSatz extends Regel<Sentence> {
 
 	@Override
 	public void fuehreAus(Sentence t) {
-		for (Word w : t.getChildElements()) {
+		for (Word w : t.getWordsOnly()) {
 			if (w.getPartOfSpeech().getPartOfSpeechName().equals("VAFIN")
 					&& (w.getText().startsWith("wurd")
 							|| w.getText().startsWith("würd") || w.getText()
