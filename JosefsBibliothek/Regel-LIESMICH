@@ -1,4 +1,4 @@
-So muss eine Regel Java-Datei aussehen: Siehe TestRegel.java
+In Regeldatei auf korrekte imports achten!
 Diese kann dann auf der Kommandozeile kompiliert werden mit 
 	javac -classpath ".:./JosefsBibliothek.jar:./DocumentModel.jar" #RegelName.java
 Dafür müssen die aktuellen exportieren Jars des DocumentModel und der Bibliothek
