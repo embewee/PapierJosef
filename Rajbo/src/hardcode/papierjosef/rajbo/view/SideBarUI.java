@@ -15,6 +15,12 @@ import javax.swing.JTabbedPane;
 
 public class SideBarUI extends JTabbedPane {
 	
+	public void insertTab(BaseTab tab) {
+		this.addTab(provider.getLocaleString(tab.getTitleKey()), tab);
+	}
+	
+	
+	
 	private JPanel analyzePanel;
 	private PreferencesProvider provider;
 	
@@ -24,6 +30,8 @@ public class SideBarUI extends JTabbedPane {
 	public SideBarUI(PreferencesProvider provider) {
 		this.provider = provider;
 	}
+	
+	
 	
 	public void insertAnalyzePanel(Vector<String> languages, ActionListener btnAnalyzeActionListener) {
 		analyzePanel = new JPanel();

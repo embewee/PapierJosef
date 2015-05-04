@@ -36,7 +36,7 @@ public class WindowController {
 		
 		setStandardActionListeners();
 		
-		insterSideBarAnalyzeTab();
+		insertSideBarAnalyzeTab();
 		insertSideBarStatisticsTab();
 		insertSideBarRuleTab();
 		insertSideBarOperationsTab();
@@ -58,6 +58,19 @@ public class WindowController {
 		testPanel.add(btn1);
 		window.getSideBarUI().addTab("TEST", testPanel);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	private void setStandardActionListeners() {
 		window.setMenuItemLoadActionListener(new MenuItemLoadActionListener());
@@ -67,7 +80,7 @@ public class WindowController {
 		window.setMenuItemOperationsActionListener(new MenuItemOperationsActionListener());
 	}
 	
-	private void insterSideBarAnalyzeTab() {
+	private void insertSideBarAnalyzeTab() {
 		Vector<String> languages = new Vector<>();
 		
 		//TODO: collect languages
@@ -96,6 +109,9 @@ public class WindowController {
 		window.setVisible(true);
 	}
 	
+	/**
+	 * Read document into 
+	 */
 	private class MenuItemLoadActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			final JFileChooser fc = new JFileChooser();
