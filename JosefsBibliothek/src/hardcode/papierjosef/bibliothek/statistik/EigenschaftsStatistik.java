@@ -45,4 +45,10 @@ public class EigenschaftsStatistik extends Statistik {
 //		return stat;
 //	}
 
+	@Override
+	public Report getReport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

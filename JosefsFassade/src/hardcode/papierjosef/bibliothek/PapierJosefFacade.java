@@ -14,8 +14,10 @@ import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.KorrelatSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
+import hardcode.papierjosef.bibliothek.operation.rules.quality.TestUserInputRule;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlichesPronomen;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
+import hardcode.papierjosef.bibliothek.statistik.GrundlegendeStatistik;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
 import hardcode.papierjosef.model.document.Document;
@@ -48,6 +50,7 @@ public class PapierJosefFacade {
 		list.add(new PassivSatz());
 		list.add(new UnpersoenlichesPronomen());
 		list.add(new ZuVieleADVProSatz());
+		list.add(new TestUserInputRule());
 		return list;
 	}
 	
@@ -60,6 +63,7 @@ public class PapierJosefFacade {
 	public Vector<Statistik<? extends TextElement<?>>> getInternalStatistics() {
 		Vector<Statistik<? extends TextElement<?>>> stats = new Vector<>();
 		//TODO: add stats
+		stats.add(new GrundlegendeStatistik());
 		return stats;
 	}
 	

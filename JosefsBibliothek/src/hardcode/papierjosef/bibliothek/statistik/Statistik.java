@@ -23,16 +23,6 @@ public abstract class Statistik<T extends TextElement<?>> extends Operation<T> {
 	 */
 	public abstract Report getReport();
 
-	class Report {
-		Map<String, Object> values;
 
-		public void put(String key, Object value) {
-			values.put(key, value);
-		}
-		
-		public Object get(String key){
-			return values.get(key);
-		}
-	}
 
 }

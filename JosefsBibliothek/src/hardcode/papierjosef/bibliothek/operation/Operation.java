@@ -5,6 +5,13 @@ import java.util.Collection;
 
 //TODO welches ist besser?
 //public abstract class Operation<T extends TextElement> {
+/**
+ * Operation als abstrakte Klasse, die Regeln und Statistiken verallgemeinert.
+ * Regeln kann man einfaerben.
+ * Statistiken kann man berichten.  
+ *
+ * @param <T>
+ */
 public abstract class Operation<T>{
 
 	private Class<T> type;
