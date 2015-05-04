@@ -2,6 +2,7 @@ package hardcode.papierjosef.rajbo;
 
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.rajbo.controller.WindowController;
+import hardcode.papierjosef.rajbo.view.Window;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -104,5 +105,9 @@ public class Application implements Environment {
 		Vector<String> lang=new Vector<String>();
 		lang.add("DEUTSCH");
 		return lang;
+	}
+	
+	public Window getWindow(){
+		return windowController.getWindow();
 	}
 }

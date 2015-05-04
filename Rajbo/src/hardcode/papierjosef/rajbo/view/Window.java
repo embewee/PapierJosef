@@ -159,4 +159,8 @@ public class Window extends JFrame {
 	public void setMenuItemOperationsActionListener(ActionListener l) {
 		menuItemOperations.addActionListener(l);
 	}
+	
+	public void setTextUIText(String text){
+		textUI.setText(text);
+	}
 }

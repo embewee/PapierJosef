@@ -1,8 +1,9 @@
 package hardcode.papierjosef.rajbo;
 
-import java.util.Vector;
-
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
+import hardcode.papierjosef.rajbo.view.Window;
+
+import java.util.Vector;
 
 public interface Environment {
 
@@ -15,5 +16,7 @@ public interface Environment {
 	public String getPropertiesDirectory();
 
 	public String getLocaleString(String key);
+
+	public Window getWindow();
 
 }
