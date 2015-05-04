@@ -1,5 +1,9 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.bibliothek.statistik.Statistik;
+import hardcode.papierjosef.model.document.HumbugException;
+import hardcode.papierjosef.rajbo.Environment;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,12 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import hardcode.papierjosef.bibliothek.operation.OperationChain;
-import hardcode.papierjosef.bibliothek.operation.Regel;
-import hardcode.papierjosef.bibliothek.statistik.Statistik;
-import hardcode.papierjosef.model.document.HumbugException;
-import hardcode.papierjosef.rajbo.Environment;
 
 public class StatisticsTab extends BaseTab {
 
