@@ -3,6 +3,7 @@ package hardcode.papierjosef.bibliothek.operation.rules.nlp;
 import hardcode.papierjosef.bibliothek.operation.TextHaecksler;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.model.document.PartOfSpeech;
+import hardcode.papierjosef.model.document.Punctuation;
 import hardcode.papierjosef.model.document.Sentence;
 import hardcode.papierjosef.model.document.Word;
 
@@ -31,9 +32,9 @@ public class TokenDetector extends TextHaecksler<Sentence> {
 				+ File.separator + "nlpmodels/" + getSprache().getLanguage();
 		try {
 			InputStream tokenModelIn = new FileInputStream(pfad + "-token.bin");
-			InputStream posModelIn = new FileInputStream(pfad + "-pos-maxent.bin");
+			InputStream posModelIn = new FileInputStream(pfad
+					+ "-pos-maxent.bin");
 
-			
 			TokenizerModel tokenModel = new TokenizerModel(tokenModelIn);
 			if (tokenModelIn != null)
 				tokenModelIn.close();
@@ -42,14 +43,19 @@ public class TokenDetector extends TextHaecksler<Sentence> {
 				posModelIn.close();
 			TokenizerME tokenizer = new TokenizerME(tokenModel);
 			POSTaggerME tagger = new POSTaggerME(posModel);
-			
-			
-			String t[]=tokenizer.tokenize(getRawText());
-			String p[]=tagger.tag(t);
-			
-			// Residual und Punctuation werden in NlpAbschluss eingefügt
-			for(int i=0;i<t.length;i++)
-				s.addElement(new Word(Arrays.asList(t[i]),0,0,new PartOfSpeech(p[i],"")), 0);
+
+			String t[] = tokenizer.tokenize(getRawText());
+			String p[] = tagger.tag(t);
+
+			// Residual wird in NlpAbschluss eingefügt
+			for (int i = 0; i < t.length; i++) {
+				if (p[i].equals("XY") || p[i].equals("UNDEFINED")
+						|| p[i].startsWith("$"))
+					s.addElement(new Punctuation(Arrays.asList(t[i]), 0, 0), 0);
+				else
+					s.addElement(new Word(Arrays.asList(t[i]), 0, 0,
+							new PartOfSpeech(p[i], "")), 0);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (InvalidFormatException e) {
@@ -59,7 +65,6 @@ public class TokenDetector extends TextHaecksler<Sentence> {
 		} catch (HumbugException e) {
 			e.printStackTrace();
 		}
-		//TODO Tokens nach oben propagieren 
+		// TODO Tokens nach oben propagieren
 	}
-
 }

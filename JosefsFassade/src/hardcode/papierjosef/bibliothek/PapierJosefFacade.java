@@ -35,6 +35,8 @@ public class PapierJosefFacade {
 		return document != null;
 	}
 	
+	//#FIXME
+	//Ein Setter sollte nicht so viel Funktionalität enthalten
 	public void setFilter(Filtry filter) {
 		filter.setInputRawText(loadedDocument.getText());
 		filter.execute();
