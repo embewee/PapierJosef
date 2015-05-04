@@ -2,10 +2,10 @@ package hardcode.papierjosef.bibliothek.operation;
 
 import java.lang.reflect.ParameterizedType;
 
-import hardcode.papierjosef.model.document.TextElement;
 
-
-public abstract class Operation<T extends TextElement> {
+//TODO welches ist besser?
+//public abstract class Operation<T extends TextElement> {
+public abstract class Operation<T> {
 	
 	private Class<T> type;
 	

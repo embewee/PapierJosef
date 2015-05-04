@@ -1,5 +1,12 @@
 package hardcode.papierjosef.rajbo.controller;
 
+import hardcode.papierjosef.bibliothek.PapierJosefFacade;
+import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.rajbo.PreferencesProvider;
+import hardcode.papierjosef.rajbo.view.OperationViewer;
+import hardcode.papierjosef.rajbo.view.Window;
+import hardcode.preferences.PreferencesController;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,18 +21,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 
-import hardcode.papierjosef.bibliothek.LibraryFacade;
-import hardcode.papierjosef.rajbo.PreferencesProvider;
-import hardcode.papierjosef.rajbo.view.OperationViewer;
-import hardcode.papierjosef.rajbo.view.Window;
-import hardcode.preferences.PreferencesController;
-
 public class WindowController {
 	private PreferencesProvider provider;
-	private LibraryFacade library;
+	private PapierJosefFacade library;
 	private Window window;
 	
-	public WindowController(PreferencesProvider provider, String windowTitle, LibraryFacade library) {
+	public WindowController(PreferencesProvider provider, String windowTitle, PapierJosefFacade library) {
 		this.library = library;
 		this.provider = provider;
 		
@@ -111,6 +112,8 @@ public class WindowController {
 					library.readDocument(file);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(window, e1.getMessage(), window.getTitle(), JOptionPane.ERROR_MESSAGE);
+				} catch (LibraryException e1) {
+					JOptionPane.showMessageDialog(window, e1.getMessage(), window.getTitle(), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -151,7 +154,8 @@ public class WindowController {
 		public void actionPerformed(ActionEvent e) {
 			//TODO
 			String language = window.getSideBarUI().getSelectedLanguage(); //zB "Deutsch"
-			library.analyze();
+//			library.analyze();
+			System.out.println("ASDF ASDF");
 		}
 	}
 	

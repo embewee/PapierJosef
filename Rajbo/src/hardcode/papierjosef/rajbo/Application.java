@@ -1,5 +1,8 @@
 package hardcode.papierjosef.rajbo;
 
+import hardcode.papierjosef.bibliothek.PapierJosefFacade;
+import hardcode.papierjosef.rajbo.controller.WindowController;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,10 +11,6 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
-import hardcode.papierjosef.bibliothek.JosefsFassade;
-import hardcode.papierjosef.bibliothek.LibraryFacade;
-import hardcode.papierjosef.rajbo.controller.WindowController;
 
 public class Application implements PreferencesProvider {
 	
@@ -29,7 +28,7 @@ public class Application implements PreferencesProvider {
 	private ResourceBundle i18n;
 	
 	private WindowController windowController;
-	private LibraryFacade library;
+	private PapierJosefFacade library;
 	
 	public Application(File applicationDirectory) {
 		File propFile = new File(PROPERTIES_SUBFOLDER + File.separator + APP_PROPERTIES_FILENAME);
@@ -41,7 +40,7 @@ public class Application implements PreferencesProvider {
 		}
 		
 		File libraryHome = new File(properties.getProperty("library_home"));
-		library = new JosefsFassade(libraryHome);
+		library = new PapierJosefFacade(libraryHome);
 		
 		Locale locale = new Locale(properties.getProperty("locale"));
 		i18n = ResourceBundle.getBundle("MessagesBundle", locale);

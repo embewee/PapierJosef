@@ -26,6 +26,7 @@ public class TextHaeckslerKette {
 			TokenDetector t = new TokenDetector();
 			NlpAbschluss n = new NlpAbschluss();
 
+			//FIXME Sprache auswaehlbar machen
 			Language deutsch = new Deutsch();
 			p.setSprache(deutsch);
 			s.setSprache(deutsch);

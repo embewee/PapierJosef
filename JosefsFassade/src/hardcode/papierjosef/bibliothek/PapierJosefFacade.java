@@ -1,94 +1,62 @@
 package hardcode.papierjosef.bibliothek;
 
 
+import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.bibliothek.filtry.Filtry;
+import hardcode.papierjosef.bibliothek.loader.documentloader.DocumentLoader;
+import hardcode.papierjosef.bibliothek.loader.documentloader.LoadedDocument;
+import hardcode.papierjosef.bibliothek.operation.Operation;
+import hardcode.papierjosef.bibliothek.operation.OperationChain;
+import hardcode.papierjosef.bibliothek.operation.OperationProcessor;
+import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
+import hardcode.papierjosef.model.document.Document;
+import hardcode.papierjosef.model.document.HumbugException;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 //TODO: make singleton
 
 public class PapierJosefFacade {
-
-	public void readDocument(File file) throws IOException {
-		// TODO Auto-generated method stub
-		
+	
+	private LoadedDocument loadedDocument;
+	private Document document;
+	
+	public void readDocument(File file) throws IOException, LibraryException {
+		loadedDocument = DocumentLoader.loadFile(file);
 	}
-
-	public String evaluate() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Document getDocument() {
+		return document;
 	}
-
-	public void analyze() {
-		// TODO Auto-generated method stub
-		
+	
+	public boolean isDocument() {
+		return document != null;
 	}
+	
+	public void setFilter(Filtry filter) {
+		filter.setInputRawText(loadedDocument.getText());
+		filter.execute();
+		TextHaeckslerKette k = new TextHaeckslerKette();
+		document = k.execute(filter.getFilteredOutputText(), filter.getResiduals());
+	}
+	
+	public void executeOperation(Operation<?> op) throws HumbugException {
+		OperationProcessor.execute(op, document);
+	}
+	
+	public void executeOperationChain(OperationChain chain) throws HumbugException {
+		OperationProcessor.execute(chain, document);
+	}
+	
+	public void executeOperationList(List<Operation<?>> operationList) throws HumbugException {
+		OperationProcessor.execute(operationList, document);
+	}
+	
 	private File appDir; //user application execution directory
 	public PapierJosefFacade(File appDir) {
 		this.appDir = appDir;
 	}
 	
-	
-//	private TextDokumentLader textDokumentLader;
-//	private Dokument dokument;
-//	private JosefsSekretaerin assistenz;
-//		
-//
-//	
-//	@Override
-//	public void readDocument(File file) throws IOException {
-//		textDokumentLader = new TextDokumentLader();
-//		textDokumentLader.ladeDokument(file);
-//	}
-//
-//	public String evaluate() {
-//			
-//			StringBuffer sb = new StringBuffer();
-//			
-//			for(Wortart w : dokument.getAnzahlWortarten().keySet()) {
-//				int anzahl = dokument.getAnzahlWortarten().get(w);
-//				sb.append(w.toString() + ": " + anzahl + "; " + "\n");
-//			}
-//
-//			sb.append("##################");
-//			
-//			GrundlegendeStatistik grundStat = assistenz.errechneGrundlegendeStatistik();
-//			sb.append(grundStat);
-//			
-//			return sb.toString();
-//			
-////			d.put("Tolle Eigenschaft", "true");
-////			d.getAbsaetze().get(0).put("Toller Satz", "true");
-////			d.getAbsaetze().get(0).getSaetze().get(0).put("Schöner Satz", "true");
-////			//TODO: fuer woerter!
-////			
-////			EigenschaftsStatistik eigenStat = assistenz.errechneEigenschaftsStatistik();
-////			System.out.println(eigenStat);
-////			
-////			System.out.println("##################");
-////			
-////			for(Absatz a : d.getAbsaetze()) {
-////				System.out.println("> ABSATZ");
-////				for(Satz s : a.getSaetze()) {
-////					System.out.println("---> SATZ");
-////					for(Wort w : s.getWoerter()) {
-////						System.out.println("------> " + w.getWort() + ": " + w.getWortart() + "(" + w.getStart() + ", " + w.getEnde() + ")");
-////					}
-////				}
-////			}
-//		}
-//
-//	@Override
-//	public void analyze() {
-//		try {
-//			assistenz = new JosefsSekretaerin(appDir, textDokumentLader.getDokumentString(), new DeutscheSprache());
-//		} catch (IOException e) {
-//			e.printStackTrace(); //TODO
-//		} catch (Exception e) {
-//			e.printStackTrace(); //TODO
-//		}
-//		
-//		dokument = assistenz.getDokument();
-//	}
-//	
-//	
 }
