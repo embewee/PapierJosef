@@ -24,9 +24,7 @@ public class NlpAbschluss extends TextHaecksler<Document> {
 	}
 
 	/**
-	 * TODO: Hier noch Residuals und Punctuation einfügen
 	 * 
-	 * TODO: Wie werden Resid. und Punct. mitgeführt??? Über Document??
 	 */
 	@Override
 	public void fuehreAus(Document d) {
