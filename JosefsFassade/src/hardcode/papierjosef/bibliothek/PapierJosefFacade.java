@@ -3,6 +3,7 @@ package hardcode.papierjosef.bibliothek;
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
 import hardcode.papierjosef.bibliothek.filtry.Filtry;
 import hardcode.papierjosef.bibliothek.filtry.PlainTextFiltry;
+import hardcode.papierjosef.bibliothek.loader.LadeKlasse;
 import hardcode.papierjosef.bibliothek.loader.documentloader.DocumentLoader;
 import hardcode.papierjosef.bibliothek.loader.documentloader.LoadedDocument;
 import hardcode.papierjosef.bibliothek.operation.Operation;
@@ -100,6 +101,18 @@ public class PapierJosefFacade {
 	public PapierJosefFacade(File appDir) {
 		this.appDir = appDir;
 	}
+	
+	public Operation<?> loadOperationFromFile(File file) throws LibraryException {
+		LadeKlasse<Operation<?>> loader = new LadeKlasse<Operation<?>>();
+		String classname = file.getName().substring(0, file.getName().lastIndexOf("."));
+		String path = file.getPath().substring(0, file.getPath().lastIndexOf(File.separator));
+		System.out.println(classname); //TODO: weg
+		System.out.println(path); //TODO: weg
+		
+		Operation<?> op = loader.ladeKlasse(new File(path), classname);
+		return op;
+	}
+	
 	
 	public void printDocument() {
 		DocumentPrinter.printDocument(document);
