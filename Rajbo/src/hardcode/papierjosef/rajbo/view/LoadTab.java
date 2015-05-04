@@ -60,6 +60,8 @@ public class LoadTab extends BaseTab {
 			lib.readDocument(file);
 			JOptionPane.showMessageDialog(this, "Datei erfolgreich geladen",
 					"Erfolg", JOptionPane.INFORMATION_MESSAGE);
+			getEnvironment().getWindow().setTextUIText(
+					lib.getDocument().getText());
 			// lib.getDocument();
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(this, e1.getMessage(),

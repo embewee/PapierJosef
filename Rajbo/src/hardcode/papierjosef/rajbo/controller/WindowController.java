@@ -85,4 +85,10 @@ public class WindowController {
 		}
 		return (int) l;
 	}
+	
+	//#FIXME
+	//Ist das hier vernünftig??
+	public Window getWindow(){
+		return window;
+	}
 }
