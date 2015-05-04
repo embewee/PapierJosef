@@ -15,13 +15,13 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlicherSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
+import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.model.document.TextElement;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -42,6 +42,12 @@ public class PapierJosefFacade {
 		list.add(new UnpersoenlicherSatz());
 		list.add(new ZuVieleADVProSatz());
 		return list;
+	}
+	
+	public Vector<OperationChain> getInternalRuleChains() {
+		Vector<OperationChain> chains = new Vector<>();
+		//TODO: add chains
+		return chains;
 	}
 	
 	public void readDocument(File file) throws IOException, LibraryException,
@@ -93,6 +99,10 @@ public class PapierJosefFacade {
 
 	public PapierJosefFacade(File appDir) {
 		this.appDir = appDir;
+	}
+	
+	public void printDocument() {
+		DocumentPrinter.printDocument(document);
 	}
 
 }
