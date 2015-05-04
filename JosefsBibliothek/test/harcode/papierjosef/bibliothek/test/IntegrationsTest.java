@@ -28,12 +28,7 @@ public class IntegrationsTest {
 	
 	@BeforeClass
 	public static void pruefeFunktionalitaet() throws IOException, LibraryException {
-		// #FIXME
-//		LoadedDocument d = DocumentLoader.loadFile(new File(
-//				"/media/dominik/Data/WorkspaceNew/PapierJosef/"
-//						+ "JosefsBibliothek/test-document-plain.txt"));
-		LoadedDocument d = DocumentLoader.loadFile(new File(
-				"test-document-plain.txt"));
+		LoadedDocument d = DocumentLoader.loadFile(new File("test-document-plain.txt"));
 		Filtry f = new PlainTextFiltry();
 		f.setInputRawText(d.getText());
 		f.execute();
