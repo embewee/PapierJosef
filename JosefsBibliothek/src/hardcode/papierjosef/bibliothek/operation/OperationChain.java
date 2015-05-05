@@ -1,7 +1,9 @@
 package hardcode.papierjosef.bibliothek.operation;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Eine Operationenkette enthaelt die Namen mehrer Operationen, die aus aus
@@ -12,10 +14,13 @@ import java.util.List;
  *
  */
 @SuppressWarnings("rawtypes")
-public abstract class OperationChain<T extends Operation> {
+public abstract class OperationChain<T extends Operation> implements
+		Iterable<T>, Iterator<T> {
 
 	private String chainName;
 	// private String chainDescription;
+
+	private int count = 0;
 
 	private List<T> operations;
 
@@ -43,6 +48,22 @@ public abstract class OperationChain<T extends Operation> {
 
 	public String getName() {
 		return chainName;
+	}
+
+	public Iterator<T> iterator() {
+		return this;
+	}
+
+	public boolean hasNext() {
+		return count < operations.size();
+	}
+
+	public T next() {
+		if(count==operations.size())
+			throw new NoSuchElementException();	
+		count++;
+		// TODO bei Statistik hier sachen übergeben
+		return operations.get(count-1);
 	}
 
 	//
