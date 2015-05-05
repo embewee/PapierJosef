@@ -6,6 +6,8 @@ import javax.swing.JTabbedPane;
 
 public class SideBarUI extends JTabbedPane {
 	
+	private static final long serialVersionUID = -5990105606324700653L;
+
 	private Environment environment;
 	
 	public SideBarUI(Environment environment) {

@@ -36,7 +36,7 @@ public class SentenceDetector extends TextHaecksler<Paragraph> {
 
 			String s[] = sentenceDetector.sentDetect(getRawText());
 			try {
-				for (String sentence : s)
+				for (int i = 0; i < s.length; i++)
 					t.addElement(new Sentence(null, 0, 0), 0);
 				setOutput(Arrays.asList(s));
 			} catch (HumbugException e) {

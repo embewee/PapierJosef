@@ -3,8 +3,6 @@ package hardcode.papierjosef.bibliothek.statistik;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.model.document.TextElement;
 
-import java.util.Map;
-
 /**
  * Statistiken zeichnen sich dadurch aus, dass sie über etwas berichten. Sie
  * geben folglich also einen Report (auch: Bericht) zurück.
@@ -22,7 +20,4 @@ public abstract class Statistik<T extends TextElement<?>> extends Operation<T> {
 	 *         definiert
 	 */
 	public abstract Report getReport();
-
-
-
 }

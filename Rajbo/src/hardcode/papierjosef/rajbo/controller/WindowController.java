@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("unused")
+// TODO Was ist mit den ganzen ActionListeners - werden die gebraucht?
 public class WindowController {
 	private Environment environment;
 	private Window window;
@@ -23,27 +25,10 @@ public class WindowController {
 		window = new Window(environment);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setTitle(windowTitle);
-		
+
 		window.getSideBarUI().insertTab(new LoadTab(environment));
 		window.getSideBarUI().insertTab(new AnalyzeTab(environment));
 		window.getSideBarUI().insertTab(new StatisticsTab(environment));
-
-		// //TODO: weg
-		// JPanel testPanel = new JPanel();
-		// JButton btn1 = new JButton("Färben");
-		// btn1.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// try {
-		// window.getTextUI().highlight(Color.RED, 0, 5);
-		// } catch (BadLocationException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		// });
-		// testPanel.add(btn1);
-		// window.getSideBarUI().addTab("TEST", testPanel);
 	}
 
 	public void show(int width, int height) {
@@ -78,17 +63,9 @@ public class WindowController {
 		}
 	}
 
-	private int safeLongToInt(long l) {
-		if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
-			throw new IllegalArgumentException(l
-					+ " cannot be cast to int without changing its value.");
-		}
-		return (int) l;
-	}
-	
-	//#FIXME
-	//Ist das hier vernünftig??
-	public Window getWindow(){
+	// #FIXME
+	// Ist das hier vernünftig??
+	public Window getWindow() {
 		return window;
 	}
 }

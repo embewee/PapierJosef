@@ -31,21 +31,22 @@ public class AnalyzeTab extends BaseTab {
 
 	private static final long serialVersionUID = -4122758110947825524L;
 
-	private JComboBox<Regel> comboRules;
+	private JComboBox<Regel<?>> comboRules;
 	private JButton btnExecuteRule;
 
-	private JComboBox<OperationChain> comboChains;
+	private JComboBox<OperationChain<?>> comboChains;
 	private JButton btnExecuteChain;
 
-	private DefaultListModel<Operation> historyModel;
+	private DefaultListModel<Operation<?>> historyModel;
 
 	public AnalyzeTab(Environment e) {
 		super(e);
 	}
 
+	//TODO: comboRules mal typsichern!!
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	void init() {
-		// setLayout(new FlowLayout(FlowLayout.LEFT));
 		setLayout(new GridLayout(0, 1));
 
 		JPanel paneRules = new JPanel();
@@ -88,7 +89,7 @@ public class AnalyzeTab extends BaseTab {
 		JLabel lblChains = new JLabel(getEnvironment().getLocaleString(
 				"sidebar_analyze_lblChains"));
 		paneChains.add(lblChains);
-		comboChains = new JComboBox<OperationChain>(getEnvironment()
+		comboChains = new JComboBox<OperationChain<?>>(getEnvironment()
 				.getLibrary().getInternalRuleChains());
 		paneChains.add(comboChains);
 		btnExecuteChain = new JButton(getEnvironment().getLocaleString(
@@ -134,8 +135,8 @@ public class AnalyzeTab extends BaseTab {
 
 		externalPane.add(btnLoadExternal);
 
-		historyModel = new DefaultListModel<Operation>();
-		JList<Operation> history = new JList<Operation>(historyModel);
+		historyModel = new DefaultListModel<Operation<?>>();
+		JList<Operation<?>> history = new JList<Operation<?>>(historyModel);
 		history.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent ev) {
 				JList<Operation> list = (JList<Operation>) ev.getSource();

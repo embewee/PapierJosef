@@ -18,9 +18,6 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-
-
-
 public class PreferencesController {
 	public final static String PREFIX = "#";
 	public final static String PREFIX_TYPE = PREFIX + "TYPE__";
@@ -36,7 +33,9 @@ public class PreferencesController {
 	private PreferencesWindow window;
 	private PreferencesModel model;
 	private String title;
-	
+
+	//TODO Wozu gebraucht?
+	@SuppressWarnings("unused")
 	private Vector<String> fileNames;
 	private File directory;
 	private File currentFile;
@@ -133,9 +132,7 @@ public class PreferencesController {
 			@SuppressWarnings("unchecked")
 			JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
 			String text = (String) comboBox.getSelectedItem();
-			if(text.equals(currentFile.getName())) {
-				//nop
-			} else {
+			if(!text.equals(currentFile.getName())) {
 				File filename = new File(directory.getAbsolutePath() + File.separator + text); 
 				window.setVisible(false);
 				window.clear();

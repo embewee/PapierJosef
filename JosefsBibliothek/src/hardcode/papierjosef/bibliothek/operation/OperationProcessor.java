@@ -14,6 +14,8 @@ public class OperationProcessor {
 
 	private OperationProcessor(){}
 	
+	//TODO rawtypes und unchecked weg
+	@SuppressWarnings({ "rawtypes", "unchecked" }) 
 	public static void execute(OperationChain chain, Document document) throws HumbugException {
 		execute(chain.getChain(), document);
 	}

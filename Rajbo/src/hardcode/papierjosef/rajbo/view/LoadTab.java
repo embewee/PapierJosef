@@ -9,9 +9,10 @@ import hardcode.papierjosef.rajbo.Environment;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,11 +20,15 @@ import javax.naming.OperationNotSupportedException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import javax.swing.text.BadLocationException;
 
-public class LoadTab extends BaseTab {
+public class LoadTab extends BaseTab implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 5971000257848302039L;
+
+	private ProgressDialog pd;
 
 	public LoadTab(Environment e) {
 		super(e);
@@ -88,28 +93,65 @@ public class LoadTab extends BaseTab {
 		return null;
 	}
 
-	private void loadAndPrepareDocument(File file) {
-		// TODO
-		try {
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		System.out.println("EVNT:" + evt.getPropertyName());
+
+		if (evt.getNewValue().equals(SwingWorker.StateValue.STARTED))
+			pd = new ProgressDialog();
+		else if (evt.getNewValue().equals(SwingWorker.StateValue.DONE)) {
+			pd.kill();
 			PapierJosefFacade lib = getEnvironment().getLibrary();
-			lib.readDocument(file);
+			System.out.println(lib);
 			JOptionPane.showMessageDialog(this, "Datei erfolgreich geladen",
 					"Erfolg", JOptionPane.INFORMATION_MESSAGE);
 			getEnvironment().getWindow().setTextUIText(
 					lib.getDocument().getText());
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(this, e1.getMessage(),
-					getEnvironment().getLocaleString("err_title"),
-					JOptionPane.ERROR_MESSAGE);
-		} catch (LibraryException e1) {
-			JOptionPane.showMessageDialog(this, e1.getMessage(),
-					getEnvironment().getLocaleString("err_title"),
-					JOptionPane.ERROR_MESSAGE);
-		} catch (OperationNotSupportedException e) {
-			JOptionPane.showMessageDialog(this, getEnvironment()
-					.getLocaleString("err_unknown_filetype"), getEnvironment()
-					.getLocaleString("err_title"), JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private void loadAndPrepareDocument(File file) {
+		if (file == null)
+			return;
+
+		class SwingWorkerNew extends SwingWorker<Void, Void> {
+			File f;
+			PapierJosefFacade lib;
+			JPanel p;
+
+			public SwingWorkerNew(File f, PapierJosefFacade lib, JPanel p) {
+				this.f = f;
+				this.lib = lib;
+				this.p = p;
+			}
+
+			@Override
+			protected Void doInBackground() {
+				try {
+					lib.readDocument(f);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(p, e1.getMessage(),
+							getEnvironment().getLocaleString("err_title"),
+							JOptionPane.ERROR_MESSAGE);
+				} catch (LibraryException e1) {
+					JOptionPane.showMessageDialog(p, e1.getMessage(),
+							getEnvironment().getLocaleString("err_title"),
+							JOptionPane.ERROR_MESSAGE);
+				} catch (OperationNotSupportedException e) {
+					JOptionPane.showMessageDialog(p, getEnvironment()
+							.getLocaleString("err_unknown_filetype"),
+							getEnvironment().getLocaleString("err_title"),
+							JOptionPane.ERROR_MESSAGE);
+				}
+				return null;
+			}
+		}
+
+		SwingWorkerNew swn = new SwingWorkerNew(file, getEnvironment()
+				.getLibrary(), this);
+		swn.addPropertyChangeListener(this);
+		swn.execute();
+
 	}
 
 	@Override

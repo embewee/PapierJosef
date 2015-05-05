@@ -1,8 +1,5 @@
 package hardcode.papierjosef.bibliothek.operation;
 
-import hardcode.papierjosef.model.document.TextElement;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +8,10 @@ import java.util.List;
  * Klassendateien geladen und in der angegebenen Reihenfolge nacheinander
  * ausgefuehrt werden.
  *
+ * TODO: Rawtypes weg!
+ *
  */
+@SuppressWarnings("rawtypes")
 public abstract class OperationChain<T extends Operation> {
 
 	private String chainName;
@@ -44,7 +44,7 @@ public abstract class OperationChain<T extends Operation> {
 	public String getName() {
 		return chainName;
 	}
-	
+
 	//
 	// public String getBeschreibung() {
 	// return operationenKetteBeschreibung;

@@ -8,19 +8,19 @@ import hardcode.papierjosef.rajbo.Environment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class StatisticsTab extends BaseTab {
 
-	private JComboBox<Statistik> comboStats;
+	private static final long serialVersionUID = -1963925770436466994L;
+	private JComboBox<Statistik<?>> comboStats;
 	private JButton btnExecuteStat;
 	private JTable reportTable;
 
@@ -30,7 +30,6 @@ public class StatisticsTab extends BaseTab {
 
 	@Override
 	void init() {
-		// setLayout(new FlowLayout(FlowLayout.LEFT));
 		setLayout(new GridLayout(0, 1));
 
 		JPanel paneStats = new JPanel();
@@ -38,7 +37,7 @@ public class StatisticsTab extends BaseTab {
 				"sidebar_statistics_lblStatistics"));
 		paneStats.add(lblLanguage);
 
-		comboStats = new JComboBox(getEnvironment().getLibrary()
+		comboStats = new JComboBox<Statistik<?>>(getEnvironment().getLibrary()
 				.getInternalStatistics());
 		paneStats.add(comboStats);
 
@@ -47,7 +46,7 @@ public class StatisticsTab extends BaseTab {
 		btnExecuteStat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Statistik stat = (Statistik) comboStats.getSelectedItem();
+				Statistik<?> stat = (Statistik<?>) comboStats.getSelectedItem();
 				executeStatistic(stat);
 			}
 		});
@@ -55,10 +54,10 @@ public class StatisticsTab extends BaseTab {
 		add(paneStats);
 
 		reportTable = new JTable();
-		add(reportTable);
+		add(new JScrollPane(reportTable));
 	}
 
-	private void executeStatistic(Statistik stat) {
+	private void executeStatistic(Statistik<?> stat) {
 		try {
 			getEnvironment().getLibrary().executeOperation(stat);
 			getEnvironment().getLibrary().printDocument();

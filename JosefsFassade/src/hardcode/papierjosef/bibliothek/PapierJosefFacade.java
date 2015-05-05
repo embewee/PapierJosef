@@ -18,6 +18,7 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.TestUserInputRule
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlichesPronomen;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
 import hardcode.papierjosef.bibliothek.statistik.GrundlegendeStatistik;
+import hardcode.papierjosef.bibliothek.statistik.HaeufigsteWortgruppen;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
 import hardcode.papierjosef.model.document.Document;
@@ -35,9 +36,11 @@ import javax.naming.OperationNotSupportedException;
 /*TODO:	Fassade soll sich merken, welche Operationen, ... schon ausgefuehrt wurden,
  * so dass dieselbe ~ nicht mehrfach ausgefuehrt werden kann - erst, nachdem sie wieder
  * entfernt wurde.
+ * 
+ * TODO rawtypes bei OperationChain müssen mal angegangen werden!
  */
 
-
+@SuppressWarnings("rawtypes")
 public class PapierJosefFacade {
 
 	private LoadedDocument loadedDocument;
@@ -53,20 +56,21 @@ public class PapierJosefFacade {
 		list.add(new TestUserInputRule());
 		return list;
 	}
-	
-	public Vector<OperationChain> getInternalRuleChains() {
-		Vector<OperationChain> chains = new Vector<>();
-		//TODO: add chains
+
+	public Vector<OperationChain<?>> getInternalRuleChains() {
+		Vector<OperationChain<?>> chains = new Vector<>();
+		// TODO: add chains
 		return chains;
 	}
-	
+
 	public Vector<Statistik<? extends TextElement<?>>> getInternalStatistics() {
 		Vector<Statistik<? extends TextElement<?>>> stats = new Vector<>();
-		//TODO: add stats
+		// TODO: add stats
 		stats.add(new GrundlegendeStatistik());
+		stats.add(new HaeufigsteWortgruppen());
 		return stats;
 	}
-	
+
 	public void readDocument(File file) throws IOException, LibraryException,
 			OperationNotSupportedException {
 		loadedDocument = DocumentLoader.loadFile(file);
@@ -112,24 +116,28 @@ public class PapierJosefFacade {
 		OperationProcessor.execute(operationList, document);
 	}
 
+	@SuppressWarnings("unused")
+	// TODO Wozu wird das gebraucht?
 	private File appDir; // user application execution directory
 
 	public PapierJosefFacade(File appDir) {
 		this.appDir = appDir;
 	}
-	
-	public Operation<?> loadOperationFromFile(File file) throws LibraryException {
+
+	public Operation<?> loadOperationFromFile(File file)
+			throws LibraryException {
 		LadeKlasse<Operation<?>> loader = new LadeKlasse<Operation<?>>();
-		String classname = file.getName().substring(0, file.getName().lastIndexOf("."));
-		String path = file.getPath().substring(0, file.getPath().lastIndexOf(File.separator));
-		System.out.println(classname); //TODO: weg
-		System.out.println(path); //TODO: weg
-		
+		String classname = file.getName().substring(0,
+				file.getName().lastIndexOf("."));
+		String path = file.getPath().substring(0,
+				file.getPath().lastIndexOf(File.separator));
+//		System.out.println(classname); // TODO: weg
+//		System.out.println(path); // TODO: weg
+
 		Operation<?> op = loader.ladeKlasse(new File(path), classname);
 		return op;
 	}
-	
-	
+
 	public void printDocument() {
 		DocumentPrinter.printDocument(document);
 	}

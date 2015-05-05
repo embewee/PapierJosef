@@ -1,7 +1,6 @@
 package hardcode.papierjosef.bibliothek.operation;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
 
 //TODO welches ist besser?
 //public abstract class Operation<T extends TextElement> {

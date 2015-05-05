@@ -17,12 +17,14 @@ import javax.swing.text.DefaultHighlighter;
 
 public class TextUI extends JTextPane {
 
-	Map<TextElement, Object> highlights;
+	private static final long serialVersionUID = 8000197036339578530L;
+	
+	Map<TextElement<?>, Object> highlights;
 
 	public TextUI() {
 		// TODO:
 		// setEditable(false);
-		highlights = new HashMap<TextElement, Object>();
+		highlights = new HashMap<TextElement<?>, Object>();
 	}
 
 	public void highlight(Color color, int start, int end)
@@ -32,7 +34,7 @@ public class TextUI extends JTextPane {
 		getHighlighter().addHighlight(start, end, highlightPainter);
 	}
 
-	public void highlightTextElement(Color color, TextElement te)
+	public void highlightTextElement(Color color, TextElement<?> te)
 			throws BadLocationException {
 		DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
 				color);
@@ -41,14 +43,14 @@ public class TextUI extends JTextPane {
 		highlights.put(te, o);
 	}
 
-	public void unhighlightTextElement(TextElement te)
+	public void unhighlightTextElement(TextElement<?> te)
 			throws BadLocationException {
 		getHighlighter().removeHighlight(highlights.get(te));
 		highlights.remove(te);
 	}
 
 	public void colorize(List<Paragraph> paragraphs, String property,
-			Class<? extends TextElement> lvl, Color c)
+			Class<? extends TextElement<?>> lvl, Color c)
 			throws BadLocationException {
 		for (Paragraph paragraph : paragraphs) {
 			if (lvl == Paragraph.class) {
@@ -86,7 +88,7 @@ public class TextUI extends JTextPane {
 	}
 
 	public void clearHighlight(List<Paragraph> paragraphs, String property,
-			Class<? extends TextElement> lvl) throws BadLocationException {
+			Class<? extends TextElement<?>> lvl) throws BadLocationException {
 		for (Paragraph paragraph : paragraphs) {
 			if (lvl == Paragraph.class) {
 				if (paragraph.hasProperty(property))

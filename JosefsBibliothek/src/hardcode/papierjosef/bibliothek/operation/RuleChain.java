@@ -2,6 +2,8 @@ package hardcode.papierjosef.bibliothek.operation;
 
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
+//TODO rawtypes weg
 public class RuleChain extends OperationChain<Regel> {
 
 	List<String> properties;

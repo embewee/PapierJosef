@@ -24,6 +24,8 @@ import javax.swing.JSplitPane;
 
 public class Window extends JFrame {
 	
+	private static final long serialVersionUID = 1292982528855352309L;
+
 	private JFrame me;
 	private JMenuBar menuBar;
 	private Environment environment;
