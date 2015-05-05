@@ -8,16 +8,20 @@ import hardcode.papierjosef.model.document.Sentence;
 import hardcode.papierjosef.model.document.Token;
 import hardcode.papierjosef.model.document.Word;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class OperationProcessor {
 
 	private OperationProcessor(){}
 	
-	//TODO rawtypes und unchecked weg
-	@SuppressWarnings({ "rawtypes", "unchecked" }) 
 	public static void execute(OperationChain chain, Document document) throws HumbugException {
-		execute(chain.getChain(), document);
+		Iterator it = chain.iterator();
+		while(it.hasNext()) {
+			Operation op = chain.next();
+			execute(op, document);
+		}
+//		execute(chain.getChain(), document);
 	}
 		
 	public static void execute(List<Operation<?>> operations, Document document) throws HumbugException {
