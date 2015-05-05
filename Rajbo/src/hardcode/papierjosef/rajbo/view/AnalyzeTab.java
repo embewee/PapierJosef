@@ -74,7 +74,10 @@ public class AnalyzeTab extends BaseTab {
 									getEnvironment().getLibrary().getDocument()
 											.getChildElements(),
 									rule.getProperty(), rule.getType(),
-									Color.ORANGE);
+									getEnvironment()
+										.getWindow()
+										.getTextUI()
+										.nextColor());
 					getEnvironment().getLibrary().printDocument();
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
@@ -109,9 +112,12 @@ public class AnalyzeTab extends BaseTab {
 								.getTextUI()
 								.colorizeAllLevels(
 										getEnvironment().getLibrary()
-												.getDocument()
-												.getChildElements(), property,
-										Color.ORANGE);
+											.getDocument()
+											.getChildElements(), property,
+											getEnvironment()
+												.getWindow()
+												.getTextUI()
+												.nextColor());
 					}
 					getEnvironment().getLibrary().printDocument();
 				} catch (HumbugException e1) {

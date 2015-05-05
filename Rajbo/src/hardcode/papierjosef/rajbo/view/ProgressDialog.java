@@ -12,7 +12,10 @@ public class ProgressDialog extends JDialog {
 
 	public ProgressDialog() {
 		super();
-		//setModal(true);
+//		setModal(true);
+		setAlwaysOnTop(true);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		JProgressBar dpb = new JProgressBar(0, 500);
 		dpb.setIndeterminate(true);
 		add(BorderLayout.CENTER, dpb);
