@@ -42,9 +42,9 @@ public abstract class OperationChain<T extends Operation> implements
 	// this.operationenKetteBeschreibung = beschreibung;
 	// }
 
-//	public List<Operation<?>> getChain() {
-//		return java.util.Collections.unmodifiableList(operations);
-//	}
+	public List<Operation<?>> getOperationList() {
+		return java.util.Collections.unmodifiableList(operations);
+	}
 
 	public String getName() {
 		return chainName;
@@ -70,4 +70,9 @@ public abstract class OperationChain<T extends Operation> implements
 	// public String getBeschreibung() {
 	// return operationenKetteBeschreibung;
 	// }
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

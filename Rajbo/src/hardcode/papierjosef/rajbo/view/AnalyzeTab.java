@@ -97,8 +97,9 @@ public class AnalyzeTab extends BaseTab {
 		paneChains.add(comboChains);
 		btnExecuteChain = new JButton(getEnvironment().getLocaleString(
 				"sidebar_analyze_btnAnalyzeChains"));
+		
+		
 		btnExecuteChain.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleChain chain = (RuleChain) comboChains.getSelectedItem();
