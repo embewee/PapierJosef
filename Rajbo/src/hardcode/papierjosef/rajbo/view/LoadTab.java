@@ -102,9 +102,9 @@ public class LoadTab extends BaseTab implements PropertyChangeListener {
 		else if (evt.getNewValue().equals(SwingWorker.StateValue.DONE)) {
 			pd.kill();
 			PapierJosefFacade lib = getEnvironment().getLibrary();
-			System.out.println(lib);
-			JOptionPane.showMessageDialog(this, "Datei erfolgreich geladen",
-					"Erfolg", JOptionPane.INFORMATION_MESSAGE);
+//			System.out.println(lib);
+//			JOptionPane.showMessageDialog(this, "Datei erfolgreich geladen",
+//					"Erfolg", JOptionPane.INFORMATION_MESSAGE);
 			getEnvironment().getWindow().setTextUIText(
 					lib.getDocument().getText());
 		}
