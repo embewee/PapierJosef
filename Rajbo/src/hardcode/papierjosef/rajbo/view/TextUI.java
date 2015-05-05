@@ -19,7 +19,7 @@ public class TextUI extends JTextPane {
 
 	private static final long serialVersionUID = 8000197036339578530L;
 	
-	Map<TextElement<?>, Object> highlights;
+	private Map<TextElement<?>, Object> highlights;
 
 	public TextUI() {
 		// TODO:
@@ -110,5 +110,14 @@ public class TextUI extends JTextPane {
 							unhighlightTextElement(token);
 			}
 		}
+	}
+	
+	private Color[] colors = new Color[]{Color.orange, Color.yellow, 
+			Color.red, Color.gray, Color.green};
+	private int currentColor = 0; 
+	public Color nextColor() {
+		Color c = colors[currentColor];
+		currentColor = (currentColor + 1 ) % colors.length;
+		return c;
 	}
 }
