@@ -13,11 +13,18 @@ import hardcode.papierjosef.model.document.TextElement;
  */
 public abstract class Statistik<T extends TextElement<?>> extends Operation<T> {
 
+	private Report report;
 	/**
 	 * Das bezeichnende Element
 	 * 
 	 * @return Ein Report (oder Bericht) ist als Schlüssel-Wert-Sammlung
 	 *         definiert
 	 */
-	public abstract Report getReport();
+	public Report getReport(){
+		return this.report;
+	}
+	
+	public void setReport(Report report){
+		this.report=report;
+	}
 }

@@ -20,9 +20,9 @@ public abstract class OperationChain<T extends Operation> implements
 	private String chainName;
 	// private String chainDescription;
 
-	private int count = 0;
+	protected int count = 0;
 
-	private List<T> operations;
+	protected List<T> operations;
 
 	public OperationChain() {
 		operations = new LinkedList<T>();
