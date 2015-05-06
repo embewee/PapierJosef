@@ -11,7 +11,6 @@ import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.rajbo.Environment;
 
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -64,12 +63,28 @@ public class StatisticsTab extends BaseTab {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Statistik<?> stat = (Statistik<?>) comboStats.getSelectedItem();
-				currentOperationOrChain = stat;
+				setCurrentOperation(stat);
 			}
 		});
 		paneStats.add(btnLoadStat);
 		add(paneStats);
 		
+		
+		//############
+		
+		JPanel argsPane = new JPanel();
+		argsPane.setLayout(new BoxLayout(argsPane, BoxLayout.PAGE_AXIS));
+		argsPane.add(new JLabel("Operation's /Operation chain's arguments:"));
+		argsTable = new JTable();
+		argsPane.add(new JScrollPane(argsTable));
+		
+		btnExecute = new JButton(getEnvironment().getLocaleString(
+				"sidebar_statistics_btnExecute"));
+
+		
+		add(argsPane);
+		
+				
 		
 		//############
 		
@@ -88,21 +103,14 @@ public class StatisticsTab extends BaseTab {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StatistikChain chain = (StatistikChain) comboChains.getSelectedItem();
-				currentOperationOrChain = chain;
+				setCurrentChain(chain);
 			}
 		});
 		paneChains.add(btnLoadChain);
 		add(paneChains);
+
 		//############
 		
-		JPanel argsPane = new JPanel();
-		argsPane.setLayout(new BoxLayout(argsPane, BoxLayout.PAGE_AXIS));
-		argsPane.add(new JLabel("Operation's /Operation chain's arguments:"));
-		argsTable = new JTable();
-		argsPane.add(new JScrollPane(argsTable));
-		
-		btnExecute = new JButton(getEnvironment().getLocaleString(
-				"sidebar_statistics_btnExecute"));
 		btnExecute.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,12 +125,9 @@ public class StatisticsTab extends BaseTab {
 				}
 			}
 		});
+		add(btnExecute);
 		
-		argsPane.add(btnExecute);
-		add(argsPane);
-		
-				
-		//################
+		//###############
 		
 		
 		add(new JLabel("Report:"));

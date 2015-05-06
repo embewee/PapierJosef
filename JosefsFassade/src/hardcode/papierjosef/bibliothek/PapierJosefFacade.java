@@ -19,6 +19,7 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlichesPronomen;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
+import hardcode.papierjosef.bibliothek.statistik.EigenschaftsStatistik;
 import hardcode.papierjosef.bibliothek.statistik.GrundlegendeStatistik;
 import hardcode.papierjosef.bibliothek.statistik.NGrams;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
@@ -79,6 +80,7 @@ public class PapierJosefFacade {
 		Vector<Statistik<? extends TextElement<?>>> stats = new Vector<>();
 		// TODO: add stats
 		stats.add(new GrundlegendeStatistik());
+		stats.add(new EigenschaftsStatistik());
 		stats.add(new Unigrams());
 		return stats;
 	}

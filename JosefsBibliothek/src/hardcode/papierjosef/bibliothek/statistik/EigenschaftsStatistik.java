@@ -9,6 +9,7 @@ public class EigenschaftsStatistik extends Statistik<Document> {
 	public EigenschaftsStatistik() {
 		super();
 		report = new Report();
+		arg("TestKey", "TestValue");
 	}
 
 	@Override
