@@ -71,7 +71,7 @@ public class AnalyzeTab extends BaseTab {
 					historyModel.add(0, rule);
 					ui.colorize(lib.getDocument().getChildElements(),
 							rule.getProperty(), rule.getType(), ui.nextColor());
-					lib.printDocument();
+//					lib.printDocument();
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
@@ -106,7 +106,7 @@ public class AnalyzeTab extends BaseTab {
 						ui.colorizeAllLevels(lib.getDocument()
 								.getChildElements(), property, ui.nextColor());
 					}
-					lib.printDocument();
+//					lib.printDocument();
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
@@ -162,8 +162,9 @@ public class AnalyzeTab extends BaseTab {
 	private void loadAndExecuteExternalRule() {
 		File file = chooseFile();
 		Operation<?> op = null;
+		PapierJosefFacade lib=getEnvironment().getLibrary();
 		try {
-			op = getEnvironment().getLibrary().loadOperationFromFile(file);
+			op = lib.loadOperationFromFile(file);
 		} catch (LibraryException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -173,9 +174,9 @@ public class AnalyzeTab extends BaseTab {
 				+ "'");
 		if (res == JOptionPane.YES_OPTION) {
 			try {
-				getEnvironment().getLibrary().executeOperation(op);
+				lib.executeOperation(op);
 				historyModel.add(0, op);
-				getEnvironment().getLibrary().printDocument();
+//				getEnvironment().getLibrary().printDocument();
 			} catch (HumbugException e) {
 				e.printStackTrace();
 			}

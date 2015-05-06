@@ -9,26 +9,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class HaeufigsteWortgruppen extends Statistik<Document> {
-
-	private Report report;
-
-	public HaeufigsteWortgruppen() {
-		super();
-		report = new Report();
-	}
-
-	@Override
-	public Report getReport() {
-		return report;
-	}
+public class NGrams extends Statistik<Document> {
 
 	@Override
 	public void fuehreAus(Document d) {
-		List<String> unigrams = getUnigrams(d);
+		List<String> result = new ArrayList<>();
+		result = (List<String>) this.getReport().values.values().stream()
+				.map(Object::toString)
+				.collect(Collectors.toCollection(ArrayList<String>::new));
 
-		List<List<String>> bigrams = getNGrams(unigrams, 2);
-		// Map<String, Integer> freqs = countFreqs(unigrams);
+		List<List<String>> bigrams = getNGrams(result, 2);
 		Map<List<String>, Integer> freqs2 = countFreqs(bigrams);
 
 		freqs2 = freqs2.entrySet().stream().filter(e -> e.getValue() > 1)
@@ -37,8 +27,6 @@ public class HaeufigsteWortgruppen extends Statistik<Document> {
 		for (Entry<List<String>, Integer> e : freqs2.entrySet())
 			report.put(e.getKey().toString(), e.getValue());
 
-		// for (Entry<String, Integer> e : sortByValues(freqs).entrySet())
-		// report.put(e.getKey(), e.getValue());
 	}
 
 	private <T> Map<T, Integer> countFreqs(List<T> unigrams) {
@@ -61,21 +49,5 @@ public class HaeufigsteWortgruppen extends Statistik<Document> {
 			result.add(temp);
 		}
 		return result;
-	}
-
-	private List<String> getUnigrams(Document d) {
-		return d.getChildElements().stream().map(p -> p.getChildElements())
-				.flatMap(List::stream).map(s -> s.getWordsOnly())
-				.flatMap(List::stream).map(t -> t.getChildElements())
-				.flatMap(List::stream).collect(Collectors.toList()).stream()
-				.map(str -> str.toLowerCase()).collect(Collectors.toList());
-	}
-
-	public static Map<String, Integer> sortByValues(HashMap<String, Integer> map) {
-		Map<String, Integer> sortedHashMap = new HashMap<>();
-		map.entrySet().stream()
-				.sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))
-				.forEach(e -> sortedHashMap.put(e.getKey(), e.getValue()));
-		return sortedHashMap;
 	}
 }

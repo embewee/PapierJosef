@@ -13,7 +13,7 @@ import hardcode.papierjosef.model.document.TextElement;
  */
 public abstract class Statistik<T extends TextElement<?>> extends Operation<T> {
 
-	private Report report;
+	protected Report report;
 	/**
 	 * Das bezeichnende Element
 	 * 

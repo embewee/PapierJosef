@@ -18,7 +18,7 @@ import hardcode.papierjosef.bibliothek.operation.rules.quality.PassivSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.UnpersoenlichesPronomen;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.ZuVieleADVProSatz;
 import hardcode.papierjosef.bibliothek.statistik.GrundlegendeStatistik;
-import hardcode.papierjosef.bibliothek.statistik.HaeufigsteWortgruppen;
+import hardcode.papierjosef.bibliothek.statistik.Unigrams;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.bibliothek.util.DocumentPrinter;
 import hardcode.papierjosef.model.document.Document;
@@ -64,7 +64,7 @@ public class PapierJosefFacade {
 		testRuleChain.setName("TestRuleChain");
 		testRuleChain.addOperation(new LangeSaetzeRegel());
 		testRuleChain.addOperation(new UnpersoenlichesPronomen());
-		
+		testRuleChain.inferAllProperties();
 		
 		
 		// TODO: add chains
@@ -76,7 +76,7 @@ public class PapierJosefFacade {
 		Vector<Statistik<? extends TextElement<?>>> stats = new Vector<>();
 		// TODO: add stats
 		stats.add(new GrundlegendeStatistik());
-		stats.add(new HaeufigsteWortgruppen());
+		stats.add(new Unigrams());
 		return stats;
 	}
 

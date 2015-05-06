@@ -60,7 +60,7 @@ public class StatisticsTab extends BaseTab {
 	private void executeStatistic(Statistik<?> stat) {
 		try {
 			getEnvironment().getLibrary().executeOperation(stat);
-			getEnvironment().getLibrary().printDocument();
+//			getEnvironment().getLibrary().printDocument();
 		} catch (HumbugException e1) {
 			e1.printStackTrace();
 		}
