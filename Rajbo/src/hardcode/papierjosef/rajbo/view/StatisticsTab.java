@@ -1,6 +1,7 @@
 package hardcode.papierjosef.rajbo.view;
 
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
+import hardcode.papierjosef.bibliothek.exception.ParameterNotFoundException;
 import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
@@ -13,8 +14,13 @@ import hardcode.papierjosef.rajbo.Environment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class StatisticsTab extends BaseTab {
@@ -32,9 +39,10 @@ public class StatisticsTab extends BaseTab {
 	private JButton btnLoadStat;
 	private JButton btnLoadChain;
 	private JTable reportTable;
-	private JTable argsTable;
+	// private JTable argsTable;
 	private JButton btnExecute;
-	
+	private JPanel argsPane;
+
 	private Object currentOperationOrChain;
 
 	public StatisticsTab(Environment e) {
@@ -44,8 +52,8 @@ public class StatisticsTab extends BaseTab {
 	@Override
 	void init() {
 		currentOperationOrChain = null;
-		//##########
-		
+		// ##########
+
 		setLayout(new GridLayout(0, 1));
 
 		JPanel paneStats = new JPanel();
@@ -68,26 +76,22 @@ public class StatisticsTab extends BaseTab {
 		});
 		paneStats.add(btnLoadStat);
 		add(paneStats);
-		
-		
-		//############
-		
-		JPanel argsPane = new JPanel();
+
+		// ############
+
+		argsPane = new JPanel();
 		argsPane.setLayout(new BoxLayout(argsPane, BoxLayout.PAGE_AXIS));
 		argsPane.add(new JLabel("Operation's /Operation chain's arguments:"));
-		argsTable = new JTable();
-		argsPane.add(new JScrollPane(argsTable));
-		
+		// argsTable = new JTable();
+		// argsPane.add(new JScrollPane(argsTable));
+
 		btnExecute = new JButton(getEnvironment().getLocaleString(
 				"sidebar_statistics_btnExecute"));
 
-		
 		add(argsPane);
-		
-				
-		
-		//############
-		
+
+		// ############
+
 		JPanel paneChains = new JPanel();
 		JLabel lblChains = new JLabel(getEnvironment().getLocaleString(
 				"sidebar_statistics_lblChains"));
@@ -97,20 +101,20 @@ public class StatisticsTab extends BaseTab {
 		paneChains.add(comboChains);
 		btnLoadChain = new JButton(getEnvironment().getLocaleString(
 				"sidebar_statistics_btnExecuteChains"));
-		
-		
+
 		btnLoadChain.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StatistikChain chain = (StatistikChain) comboChains.getSelectedItem();
+				StatistikChain chain = (StatistikChain) comboChains
+						.getSelectedItem();
 				setCurrentChain(chain);
 			}
 		});
 		paneChains.add(btnLoadChain);
 		add(paneChains);
 
-		//############
-		
+		// ############
+
 		btnExecute.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,80 +130,112 @@ public class StatisticsTab extends BaseTab {
 			}
 		});
 		add(btnExecute);
-		
-		//###############
-		
-		
+
+		// ###############
+
 		add(new JLabel("Report:"));
 		reportTable = new JTable();
 		add(new JScrollPane(reportTable));
 	}
-	
-	private void executeCurrentOperationOrChain() throws HumbugException, ParameterNotSetException {
-		if(currentOperationOrChain instanceof Statistik<?>) {
+
+	private void executeCurrentOperationOrChain() throws HumbugException,
+			ParameterNotSetException {
+		if (currentOperationOrChain instanceof Statistik<?>) {
 			executeStatistic((Statistik<?>) currentOperationOrChain);
 		} else if (currentOperationOrChain instanceof StatistikChain) {
 			executeChain((StatistikChain) currentOperationOrChain);
 		}
 	}
-	
-	private void executeChain(StatistikChain chain) throws HumbugException, ParameterNotSetException{		
+
+	private void executeChain(StatistikChain chain) throws HumbugException,
+			ParameterNotSetException {
 		PapierJosefFacade lib = getEnvironment().getLibrary();
 		lib.executeOperationChain(chain);
 		Report report = chain.getReport();
 		displayResults(report);
 	}
-	
+
 	private void setCurrentOperation(Operation<?> op) {
 		currentOperationOrChain = op;
 		displayOperationArguments(op);
 	}
-	
+
 	private void setCurrentChain(OperationChain<?> chain) {
 		currentOperationOrChain = chain;
 	}
-			
+
 	/**
-	 * FIXME: Chains bieten keine Unterstuetzung fuer Argumente. Siehe Issue! 
+	 * FIXME: Chains bieten keine Unterstuetzung fuer Argumente. Siehe Issue!
+	 * 
 	 * @param op
 	 */
-	private void displayOperationArguments(Operation op) {
+	private void displayOperationArguments(final Operation<?> op) {
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		argsPane.add(new JScrollPane(panel));
+		argsPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
 		Set<String> args = op.getArguments();
-		
-		int i = 0;
-		Object[][] data = new Object[args.size()][2];
-		for (String key : args) {
-			data[i][0] = key;
-			data[i][1] = op.getParameterValue(key);
-			i++;
+
+		Map<String, JTextField> fields = new HashMap<>();
+		for (final String key : args) {
+			JLabel labl = new JLabel(key + ":");
+			fields.put(key, new JTextField(1));
+			JTextField f1 = fields.get(key);
+			f1.setText(op.getParameterValue(key));
+			f1.addFocusListener(new FocusListener() {
+				public void focusGained(FocusEvent arg0) {}
+
+				public void focusLost(FocusEvent arg0) {
+					try {
+						op.setParameter(key,
+								((JTextField) arg0.getSource()).getText());
+						System.out.println(op.getParameterValue(key));
+					} catch (ParameterNotFoundException e) {
+						e.printStackTrace();
+					} catch (ParameterNotSetException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			panel.add(labl);
+			panel.add(f1);
 		}
 
-		//TODO: columnNames ggf weg
-		String[] columnNames = new String[] { "Key", "Value" };
-		DefaultTableModel tm = new DefaultTableModel();
-		tm.setDataVector(data, columnNames);
-		argsTable.setModel(tm);
+		// Set<String> args = op.getArguments();
+		//
+		// int i = 0;
+		// Object[][] data = new Object[args.size()][2];
+		// for (String key : args) {
+		// data[i][0] = key;
+		// data[i][1] = op.getParameterValue(key);
+		// i++;
+		// }
+		//
+		// //TODO: columnNames ggf weg
+		// String[] columnNames = new String[] { "Key", "Value" };
+		// DefaultTableModel tm = new DefaultTableModel();
+		// tm.setDataVector(data, columnNames);
+		// argsTable.setModel(tm);
 	}
 
-	private void executeStatistic(Statistik<?> stat) throws HumbugException, ParameterNotSetException {
+	private void executeStatistic(Statistik<?> stat) throws HumbugException,
+			ParameterNotSetException {
 		getEnvironment().getLibrary().executeOperation(stat);
 		displayResults(stat.getReport());
 	}
-	
-	
 
 	private void displayResults(Report report) {
 		int i = 0;
 
 		Object[][] data = new Object[report.size()][2];
 		for (String key : report.keySet()) {
-//			System.out.println(key + ":" + report.get(key));
+			// System.out.println(key + ":" + report.get(key));
 			data[i][0] = key;
 			data[i][1] = report.get(key);
 			i++;
 		}
 
-		//TODO: columnNames ggf weg
+		// TODO: columnNames ggf weg
 		String[] columnNames = new String[] { "Key", "Value" };
 		DefaultTableModel tm = new DefaultTableModel();
 		tm.setDataVector(data, columnNames);
