@@ -42,6 +42,7 @@ public class AnalyzeTab extends BaseTab {
 	private DefaultListModel<Operation<?>> historyModel;
 	
 	private JButton btnExecute;
+	private JLabel lblCurrent;
 	
 	
 	private Object currentRuleOrChain;
@@ -56,7 +57,6 @@ public class AnalyzeTab extends BaseTab {
 	@Override
 	void init() {
 		currentRuleOrChain = null;
-		
 		
 		//########
 		
@@ -106,6 +106,9 @@ public class AnalyzeTab extends BaseTab {
 		paneChains.add(btnLoadChain);
 		
 		
+		JPanel executePane = new JPanel();
+		lblCurrent = new JLabel("Select or load a rule or chain.");
+		executePane.add(lblCurrent);
 		btnExecute = new JButton(getEnvironment().getLocaleString(
 				"sidebar_analyze_btnExecute"));
 		btnExecute.addActionListener(new ActionListener() {
@@ -114,6 +117,10 @@ public class AnalyzeTab extends BaseTab {
 				executeCurrentRuleOrChain();
 			}
 		});
+		executePane.add(btnExecute);
+		
+		
+		
 
 		JPanel externalPane = new JPanel();
 		JButton btnLoadExternal = new JButton(getEnvironment().getLocaleString(
@@ -155,7 +162,7 @@ public class AnalyzeTab extends BaseTab {
 		add(paneRules);
 		add(paneChains);
 		add(externalPane);
-		add(btnExecute);
+		add(executePane);
 		add(new JScrollPane(history));
 	}
 
@@ -163,10 +170,12 @@ public class AnalyzeTab extends BaseTab {
 	
 	private void setCurrentRule(Regel<?> rule) {
 		currentRuleOrChain = rule;
+		lblCurrent.setText(rule.toString());
 		displayOperationArguments(rule);
 	}
 	
 	private void setCurrentRuleChain(RuleChain chain) {
+		lblCurrent.setText(chain.getName());
 		currentRuleOrChain = chain;
 	}
 	

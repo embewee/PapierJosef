@@ -39,8 +39,8 @@ public class StatisticsTab extends BaseTab {
 	private JButton btnLoadStat;
 	private JButton btnLoadChain;
 	private JTable reportTable;
-	// private JTable argsTable;
 	private JButton btnExecute;
+	private JLabel lblCurrent;
 	private JPanel argsPane;
 
 	private Object currentOperationOrChain;
@@ -82,13 +82,9 @@ public class StatisticsTab extends BaseTab {
 		argsPane = new JPanel();
 		argsPane.setLayout(new BoxLayout(argsPane, BoxLayout.PAGE_AXIS));
 		argsPane.add(new JLabel("Operation's /Operation chain's arguments:"));
-		// argsTable = new JTable();
-		// argsPane.add(new JScrollPane(argsTable));
-
-		btnExecute = new JButton(getEnvironment().getLocaleString(
-				"sidebar_statistics_btnExecute"));
-
 		add(argsPane);
+		
+		
 
 		// ############
 
@@ -115,6 +111,9 @@ public class StatisticsTab extends BaseTab {
 
 		// ############
 
+		JPanel executePane = new JPanel();
+		btnExecute = new JButton(getEnvironment().getLocaleString(
+				"sidebar_statistics_btnExecute"));
 		btnExecute.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -129,7 +128,10 @@ public class StatisticsTab extends BaseTab {
 				}
 			}
 		});
-		add(btnExecute);
+		lblCurrent = new JLabel("Select or load a rule or chain.");
+		executePane.add(lblCurrent);
+		executePane.add(btnExecute);
+		add(executePane);
 
 		// ###############
 
@@ -156,11 +158,13 @@ public class StatisticsTab extends BaseTab {
 	}
 
 	private void setCurrentOperation(Operation<?> op) {
+		lblCurrent.setText(op.toString());
 		currentOperationOrChain = op;
 		displayOperationArguments(op);
 	}
 
 	private void setCurrentChain(OperationChain<?> chain) {
+		lblCurrent.setText(chain.getName());
 		currentOperationOrChain = chain;
 	}
 
@@ -200,22 +204,6 @@ public class StatisticsTab extends BaseTab {
 			panel.add(labl);
 			panel.add(f1);
 		}
-
-		// Set<String> args = op.getArguments();
-		//
-		// int i = 0;
-		// Object[][] data = new Object[args.size()][2];
-		// for (String key : args) {
-		// data[i][0] = key;
-		// data[i][1] = op.getParameterValue(key);
-		// i++;
-		// }
-		//
-		// //TODO: columnNames ggf weg
-		// String[] columnNames = new String[] { "Key", "Value" };
-		// DefaultTableModel tm = new DefaultTableModel();
-		// tm.setDataVector(data, columnNames);
-		// argsTable.setModel(tm);
 	}
 
 	private void executeStatistic(Statistik<?> stat) throws HumbugException,
