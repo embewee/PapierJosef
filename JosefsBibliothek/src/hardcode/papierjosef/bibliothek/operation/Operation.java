@@ -84,7 +84,7 @@ public abstract class Operation<T> {
 	 * @param v
 	 * @return
 	 */
-	protected Operation<?> arg(String p, String v) {
+	public Operation<?> arg(String p, String v) {
 		arguments.put(p, v);
 		return this;
 	}

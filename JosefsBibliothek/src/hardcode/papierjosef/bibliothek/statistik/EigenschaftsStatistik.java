@@ -9,7 +9,7 @@ public class EigenschaftsStatistik extends Statistik<Document> {
 	public EigenschaftsStatistik() {
 		super();
 		report = new Report();
-		arg("TestKey", "TestValue");
+		arg("TestKey", "TestValue").arg("Argument2", "mitWert");
 	}
 
 	@Override
