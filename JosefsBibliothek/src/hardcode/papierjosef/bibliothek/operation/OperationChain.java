@@ -11,6 +11,10 @@ import java.util.NoSuchElementException;
  * ausgefuehrt werden.
  *
  * TODO: Rawtypes weg!
+ * 
+ * TODO: Argumente unterstuetzen! Momentan unterstuetzen nur einzelne Operationen
+ * Argumente, sobald sie in einer Kette sind, gt das nicht mehr
+ * 
  *
  */
 @SuppressWarnings("rawtypes")
