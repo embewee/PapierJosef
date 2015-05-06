@@ -61,6 +61,7 @@ public class PapierJosefFacade {
 		
 		//TODO: TEST-Chain
 		RuleChain testRuleChain = new RuleChain();
+		testRuleChain.setName("TestRuleChain");
 		testRuleChain.addOperation(new LangeSaetzeRegel());
 		testRuleChain.addOperation(new UnpersoenlichesPronomen());
 		
