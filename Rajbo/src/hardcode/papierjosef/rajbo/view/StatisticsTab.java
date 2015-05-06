@@ -1,6 +1,10 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
+import hardcode.papierjosef.bibliothek.operation.OperationChain;
+import hardcode.papierjosef.bibliothek.operation.RuleChain;
+import hardcode.papierjosef.bibliothek.operation.StatistikChain;
 import hardcode.papierjosef.bibliothek.statistik.Report;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.model.document.HumbugException;
@@ -17,12 +21,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
 
 public class StatisticsTab extends BaseTab {
 
 	private static final long serialVersionUID = -1963925770436466994L;
 	private JComboBox<Statistik<?>> comboStats;
+	private JComboBox<OperationChain<?>> comboChains;
 	private JButton btnExecuteStat;
+	private JButton btnExecuteChain;
 	private JTable reportTable;
 
 	public StatisticsTab(Environment e) {
@@ -53,6 +60,51 @@ public class StatisticsTab extends BaseTab {
 		});
 		paneStats.add(btnExecuteStat);
 		add(paneStats);
+		
+		
+		//############
+		
+		JPanel paneChains = new JPanel();
+		JLabel lblChains = new JLabel(getEnvironment().getLocaleString(
+				"sidebar_statistics_lblChains"));
+		paneChains.add(lblChains);
+		comboChains = new JComboBox<OperationChain<?>>(getEnvironment()
+				.getLibrary().getInternalStatisticChains());
+		paneChains.add(comboChains);
+		btnExecuteChain = new JButton(getEnvironment().getLocaleString(
+				"sidebar_statistics_btnExecuteChains"));
+		
+		
+		btnExecuteChain.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StatistikChain chain = (StatistikChain) comboChains.getSelectedItem();
+				PapierJosefFacade lib = getEnvironment().getLibrary();
+
+				try {
+					lib.executeOperationChain(chain);
+				} catch (HumbugException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ParameterNotSetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				// TODO
+				Report report = chain.getReport();
+				displayResults(report);
+
+			}
+		});
+		paneChains.add(btnExecuteChain);
+		
+		//############
+		add(paneChains);
+		
+		
+		
+		
+		
 
 		reportTable = new JTable();
 		add(new JScrollPane(reportTable));

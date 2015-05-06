@@ -12,6 +12,7 @@ import hardcode.papierjosef.bibliothek.operation.OperationChain;
 import hardcode.papierjosef.bibliothek.operation.OperationProcessor;
 import hardcode.papierjosef.bibliothek.operation.Regel;
 import hardcode.papierjosef.bibliothek.operation.RuleChain;
+import hardcode.papierjosef.bibliothek.operation.StatistikChain;
 import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.KorrelatSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
@@ -80,6 +81,20 @@ public class PapierJosefFacade {
 		stats.add(new GrundlegendeStatistik());
 		stats.add(new Unigrams());
 		return stats;
+	}
+	
+	public Vector<OperationChain<?>> getInternalStatisticChains() {
+		Vector<OperationChain<?>> chains = new Vector<>();
+		
+		//NGramChain
+		StatistikChain nGramChain = new StatistikChain();
+		nGramChain.setName("NGrams");
+		nGramChain.addOperation(new Unigrams());
+		nGramChain.addOperation(new NGrams());
+		
+		//TODO: add chains
+		chains.add(nGramChain);
+		return chains;		
 	}
 
 	public void readDocument(File file) throws IOException, LibraryException,

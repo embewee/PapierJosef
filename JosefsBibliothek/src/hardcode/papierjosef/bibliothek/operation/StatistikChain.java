@@ -1,5 +1,6 @@
 package hardcode.papierjosef.bibliothek.operation;
 
+import hardcode.papierjosef.bibliothek.statistik.Report;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 
 import java.util.NoSuchElementException;
@@ -13,8 +14,15 @@ public class StatistikChain extends OperationChain<Statistik> {
 		count++;
 		// TODO bei Statistik hier sachen übergeben
 		operations.get(count - 1).setReport(
+				//FIXME DU OPFA
 				operations.get(count - 2).getReport());
 
 		return operations.get(count - 1);
+	}
+	
+	public Report getReport() {
+		Operation<?> last = getOperationList().get(getOperationList().size());
+		Statistik<?> stat = (Statistik<?>) last;
+		return stat.getReport();
 	}
 }
