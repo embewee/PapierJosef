@@ -6,7 +6,7 @@ import hardcode.papierjosef.model.document.Sentence;
 public class KorrelatSatz extends Regel<Sentence> {
 
 	@Override
-	public void fuehreAus(Sentence t) {
+	public void execute(Sentence t) {
 
 		// for(Word w:t.getChildElements()){
 		// w.getText().toLowerCase().equals("es")

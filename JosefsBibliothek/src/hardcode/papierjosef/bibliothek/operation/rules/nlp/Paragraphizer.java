@@ -10,7 +10,7 @@ import hardcode.papierjosef.model.document.Paragraph;
 public class Paragraphizer extends TextHaecksler<Document> {
 
 	@Override
-	public void fuehreAus(Document t) {
+	public void execute(Document t) {
 		String rawText = getRawText();
 		String p[] = rawText.split("\\n\\n");
 		try {

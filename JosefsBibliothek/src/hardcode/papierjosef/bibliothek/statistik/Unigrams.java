@@ -13,7 +13,7 @@ public class Unigrams extends Statistik<Document> {
 	}
 
 	@Override
-	public void fuehreAus(Document d) {
+	public void execute(Document d) {
 		List<String> unigrams = getUnigrams(d);
 		for (String e : unigrams)
 			report.put(e, 1);

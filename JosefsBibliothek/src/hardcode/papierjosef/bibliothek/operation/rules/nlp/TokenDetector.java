@@ -27,7 +27,7 @@ public class TokenDetector extends TextHaecksler<Sentence> {
 	 */
 	@Override
 	// #FIXME
-	public void fuehreAus(Sentence s) {
+	public void execute(Sentence s) {
 		String pfad = System.getProperty("user.dir") + File.separator
 				+ "../JosefsBibliothek" + File.separator + "sprachen"
 				+ File.separator + getSprache().getLanguage() + File.separator

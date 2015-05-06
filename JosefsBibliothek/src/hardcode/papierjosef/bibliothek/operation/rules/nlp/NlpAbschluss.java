@@ -27,7 +27,7 @@ public class NlpAbschluss extends TextHaecksler<Document> {
 	 * 
 	 */
 	@Override
-	public void fuehreAus(Document d) {
+	public void execute(Document d) {
 		int pos = 0;
 		if (residuals != null && residuals.size() > 1) {
 			Iterator<Residual> rit = residuals.iterator();

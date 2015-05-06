@@ -20,7 +20,7 @@ public class SentenceDetector extends TextHaecksler<Paragraph> {
 	@Override
 	// #FIXME
 	// Pfad is scheiße, so n quatsch mit ../ wollen wir nicht
-	public void fuehreAus(Paragraph t) {
+	public void execute(Paragraph t) {
 		String pfad = System.getProperty("user.dir") + File.separator
 				+ "../JosefsBibliothek" + File.separator + "sprachen"
 				+ File.separator + getSprache().getLanguage() + File.separator

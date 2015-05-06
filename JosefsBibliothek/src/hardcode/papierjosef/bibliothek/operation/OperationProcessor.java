@@ -94,26 +94,26 @@ public class OperationProcessor {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void executeInternal (Operation op, Document patiens){
-		op.fuehreAus(patiens);
+		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void executeInternal (Operation op, Paragraph patiens){
-		op.fuehreAus(patiens);
+		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void executeInternal (Operation op, Sentence patiens){
-		op.fuehreAus(patiens);
+		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void executeInternal (Operation op, Word patiens){
-		op.fuehreAus(patiens);
+		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void executeInternal (Operation op, Punctuation patiens){
-		op.fuehreAus(patiens);
+		op.execute(patiens);
 	}
 }

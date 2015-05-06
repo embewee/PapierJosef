@@ -16,7 +16,7 @@ public class GrundlegendeStatistik extends Statistik<Document> {
 	}
 
 	@Override
-	public void fuehreAus(Document t) {
+	public void execute(Document t) {
 		report.put("zahlDerAbsaetze", t.getChildElements().size());
 		report.put(
 				"zahlDerSaetze",

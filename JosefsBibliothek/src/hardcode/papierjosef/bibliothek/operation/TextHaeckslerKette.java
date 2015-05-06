@@ -34,23 +34,23 @@ public class TextHaeckslerKette {
 			n.setSprache(deutsch);
 
 			p.setRawText(plainText);
-			p.fuehreAus(d);
+			p.execute(d);
 
 			List<String> stringParagraphs = p.getOutput();
 			List<Paragraph> paragraphs = d.getChildElements();
 
 			for (int i = 0; i < stringParagraphs.size(); i++) {
 				s.setRawText(stringParagraphs.get(i));
-				s.fuehreAus(paragraphs.get(i));
+				s.execute(paragraphs.get(i));
 				List<String> stringSentences = s.getOutput();
 				List<Sentence> sentences = paragraphs.get(i).getChildElements();
 				for (int j = 0; j < stringSentences.size(); j++) {
 					t.setRawText(stringSentences.get(j));
-					t.fuehreAus(sentences.get(j));
+					t.execute(sentences.get(j));
 				}
 			}
 
-			n.fuehreAus(d);
+			n.execute(d);
 
 			return d;
 		} catch (HumbugException e) {

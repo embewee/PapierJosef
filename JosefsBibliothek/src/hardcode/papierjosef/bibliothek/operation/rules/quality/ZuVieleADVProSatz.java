@@ -14,7 +14,7 @@ import hardcode.papierjosef.model.document.annotation.TextElementProperty;
 public class ZuVieleADVProSatz extends Regel<Sentence> {
 
 	@Override
-	public void fuehreAus(Sentence t) {
+	public void execute(Sentence t) {
 		String ADV = "ADV";
 		int nrOfAdv = 0;
 		for (Word w : t.getWordsOnly()) {

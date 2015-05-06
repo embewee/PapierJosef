@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class NGrams extends Statistik<Document> {
 
 	@Override
-	public void fuehreAus(Document d) {
+	public void execute(Document d) {
 		List<String> result = new ArrayList<>();
 		result = (List<String>) this.getReport().values.values().stream()
 				.map(Object::toString)

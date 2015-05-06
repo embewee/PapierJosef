@@ -12,7 +12,7 @@ public class EigenschaftsStatistik extends Statistik<Document> {
 	}
 
 	@Override
-	public void fuehreAus(Document t) {
+	public void execute(Document t) {
 
 	}
 
