@@ -128,9 +128,8 @@ public abstract class Operation<T> {
 	@SuppressWarnings("unchecked")
 	protected <S> S p(String name, Class<S> c) {
 		if (c == null)
-			throw new NullPointerException("clas is null");
+			throw new NullPointerException("Class is null");
 		try {
-
 			if (c.equals(Integer.class)) {
 				return (S) Integer.valueOf(arguments.get(name));
 			} else if (c.equals(Double.class)) {
@@ -153,7 +152,6 @@ public abstract class Operation<T> {
 		}
 
 		throw new IllegalArgumentException("Invalid clas " + c);
-
 	}
 
 	@Override

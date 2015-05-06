@@ -24,6 +24,11 @@ public abstract class Statistik<T extends TextElement<?>> extends Operation<T> {
 		return this.report;
 	}
 	
+	public Statistik() {
+		super();
+		this.report=new Report();
+	}
+
 	public void setReport(Report report){
 		this.report=report;
 	}

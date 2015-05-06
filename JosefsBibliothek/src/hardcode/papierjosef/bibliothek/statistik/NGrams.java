@@ -9,13 +9,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * Kannste nur in da Kette ausführn!
+ * @author dominik
+ *
+ */
 public class NGrams extends Statistik<Document> {
 
-	
-	
 	public NGrams() {
 		super();
-		arg("n","2");
+		arg("n", "2");
 	}
 
 	@Override
@@ -24,16 +27,19 @@ public class NGrams extends Statistik<Document> {
 		result = (List<String>) this.getReport().values.values().stream()
 				.map(Object::toString)
 				.collect(Collectors.toCollection(ArrayList<String>::new));
-		
-		List<List<String>> bigrams = getNGrams(result, p("n",Integer.class));
-		Map<List<String>, Integer> freqs2 = countFreqs(bigrams);
 
-		freqs2 = freqs2.entrySet().stream().filter(e -> e.getValue() > 1)
-				.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+		Map<List<String>, Integer> freqs2 = countFreqs(getNGrams(result,
+				p("n", Integer.class)));
 
 		for (Entry<List<String>, Integer> e : freqs2.entrySet())
 			report.put(e.getKey().toString(), e.getValue());
 
+	}
+
+	public Map<List<String>, Integer> filterFreq(Map<List<String>, Integer> m,
+			int n) {
+		return m.entrySet().stream().filter(e -> e.getValue() > n)
+				.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 	}
 
 	private <T> Map<T, Integer> countFreqs(List<T> unigrams) {
