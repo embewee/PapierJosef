@@ -150,6 +150,18 @@ public class PapierJosefFacade {
 		this.appDir = appDir;
 	}
 
+	public Regel<?> loadRuleFromFile(File file) throws LibraryException {
+		Operation<?> op = loadOperationFromFile(file);
+		
+		if(op instanceof Regel) {
+			return (Regel) op;
+		} else {
+			throw new LibraryException("Selected file is not a valid Rule"
+					+ "(Could not cast to Rule)");
+		}
+		
+	}
+	
 	public Operation<?> loadOperationFromFile(File file)
 			throws LibraryException {
 		LadeKlasse<Operation<?>> loader = new LadeKlasse<Operation<?>>();

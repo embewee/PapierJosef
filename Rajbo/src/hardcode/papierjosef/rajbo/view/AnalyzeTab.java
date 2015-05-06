@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
+import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,12 +34,18 @@ public class AnalyzeTab extends BaseTab {
 	private static final long serialVersionUID = -4122758110947825524L;
 
 	private JComboBox<Regel<?>> comboRules;
-	private JButton btnExecuteRule;
+	private JButton btnLoadRule;
 
 	private JComboBox<OperationChain<?>> comboChains;
-	private JButton btnExecuteChain;
+	private JButton btnLoadChain;
 
 	private DefaultListModel<Operation<?>> historyModel;
+	
+	private JButton btnExecute;
+	
+	
+	private Object currentRuleOrChain;
+	
 
 	public AnalyzeTab(Environment e) {
 		super(e);
@@ -48,6 +55,11 @@ public class AnalyzeTab extends BaseTab {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	void init() {
+		currentRuleOrChain = null;
+		
+		
+		//########
+		
 		setLayout(new GridLayout(0, 1));
 
 		JPanel paneRules = new JPanel();
@@ -59,31 +71,19 @@ public class AnalyzeTab extends BaseTab {
 				.getInternalRules());
 		paneRules.add(comboRules);
 
-		btnExecuteRule = new JButton(getEnvironment().getLocaleString(
+		btnLoadRule = new JButton(getEnvironment().getLocaleString(
 				"sidebar_analyze_btnAnalyzeRules"));
-		btnExecuteRule.addActionListener(new ActionListener() {
+		
+		btnLoadRule.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Regel rule = (Regel) comboRules.getSelectedItem();
-				TextUI ui = getEnvironment().getWindow().getTextUI();
-				PapierJosefFacade lib = getEnvironment().getLibrary();
-				try {
-					lib.executeOperation(rule);
-					historyModel.add(0, rule);
-					ui.colorize(lib.getDocument().getChildElements(),
-							rule.getProperty(), rule.getType(), ui.nextColor());
-//					lib.printDocument();
-				} catch (HumbugException e1) {
-					e1.printStackTrace();
-				} catch (BadLocationException e1) {
-					e1.printStackTrace();
-				} catch (ParameterNotSetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				setCurrentRule(rule);
 			}
 		});
-		paneRules.add(btnExecuteRule);
+		
+		
+		paneRules.add(btnLoadRule);
 
 		JPanel paneChains = new JPanel();
 		JLabel lblChains = new JLabel(getEnvironment().getLocaleString(
@@ -92,36 +92,28 @@ public class AnalyzeTab extends BaseTab {
 		comboChains = new JComboBox<OperationChain<?>>(getEnvironment()
 				.getLibrary().getInternalRuleChains());
 		paneChains.add(comboChains);
-		btnExecuteChain = new JButton(getEnvironment().getLocaleString(
+		btnLoadChain = new JButton(getEnvironment().getLocaleString(
 				"sidebar_analyze_btnAnalyzeChains"));
 		
 		
-		btnExecuteChain.addActionListener(new ActionListener() {
+		btnLoadChain.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleChain chain = (RuleChain) comboChains.getSelectedItem();
-				TextUI ui = getEnvironment().getWindow().getTextUI();
-				PapierJosefFacade lib = getEnvironment().getLibrary();
-				try {
-					lib.executeOperationChain(chain);
-					// TODO FIXME
-					// historyModel.add(0, chain);
-					for (String property : chain.getProperties()) {
-						ui.colorizeAllLevels(lib.getDocument()
-								.getChildElements(), property, ui.nextColor());
-					}
-//					lib.printDocument();
-				} catch (HumbugException e1) {
-					e1.printStackTrace();
-				} catch (BadLocationException e1) {
-					e1.printStackTrace();
-				} catch (ParameterNotSetException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				setCurrentRuleChain(chain);
 			}
 		});
-		paneChains.add(btnExecuteChain);
+		paneChains.add(btnLoadChain);
+		
+		
+		btnExecute = new JButton(getEnvironment().getLocaleString(
+				"sidebar_analyze_btnExecute"));
+		btnExecute.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				executeCurrentRuleOrChain();
+			}
+		});
 
 		JPanel externalPane = new JPanel();
 		JButton btnLoadExternal = new JButton(getEnvironment().getLocaleString(
@@ -129,7 +121,7 @@ public class AnalyzeTab extends BaseTab {
 		btnLoadExternal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loadAndExecuteExternalRule();
+				loadExternalRule();
 			}
 		});
 
@@ -163,34 +155,99 @@ public class AnalyzeTab extends BaseTab {
 		add(paneRules);
 		add(paneChains);
 		add(externalPane);
+		add(btnExecute);
 		add(new JScrollPane(history));
 	}
 
-	private void loadAndExecuteExternalRule() {
+	//########
+	
+	private void setCurrentRule(Regel<?> rule) {
+		currentRuleOrChain = rule;
+		displayOperationArguments(rule);
+	}
+	
+	private void setCurrentRuleChain(RuleChain chain) {
+		currentRuleOrChain = chain;
+	}
+	
+	
+	private void executeCurrentRuleOrChain() {
+		if(currentRuleOrChain instanceof Regel<?>) {
+			executeRule((Regel<?>)currentRuleOrChain);
+		} else if (currentRuleOrChain instanceof RuleChain) {
+			executeChain((RuleChain) currentRuleOrChain);
+		}
+	}
+
+	private void executeRule(Regel<?> rule) {
+		TextUI ui = getEnvironment().getWindow().getTextUI();
+		PapierJosefFacade lib = getEnvironment().getLibrary();
+		
+		try {
+			lib.executeOperation(rule);
+			historyModel.add(0, rule);
+			ui.colorize(lib.getDocument().getChildElements(),
+					rule.getProperty(), rule.getType(), ui.nextColor());
+//			lib.printDocument();
+		} catch (HumbugException e1) {
+			e1.printStackTrace();
+		} catch (BadLocationException e1) {
+			e1.printStackTrace();
+		} catch (ParameterNotSetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	private void executeChain(RuleChain chain) {
+		TextUI ui = getEnvironment().getWindow().getTextUI();
+		PapierJosefFacade lib = getEnvironment().getLibrary();
+		
+		try {
+			lib.executeOperationChain(chain);
+			// TODO FIXME
+			// historyModel.add(0, chain);
+			for (String property : chain.getProperties()) {
+				ui.colorizeAllLevels(lib.getDocument()
+						.getChildElements(), property, ui.nextColor());
+			}
+//			lib.printDocument();
+		} catch (HumbugException e1) {
+			e1.printStackTrace();
+		} catch (BadLocationException e1) {
+			e1.printStackTrace();
+		} catch (ParameterNotSetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	private void displayOperationArguments(Operation<?> op) {
+		
+	}
+	
+	
+	
+	//########
+	
+	private void loadExternalRule() {
 		File file = chooseFile();
-		Operation<?> op = null;
+		Regel<?> op = null;
 		PapierJosefFacade lib=getEnvironment().getLibrary();
 		try {
-			op = lib.loadOperationFromFile(file);
+			op = lib.loadRuleFromFile(file);
 		} catch (LibraryException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		int res = JOptionPane.showConfirmDialog(this, "Execute rule '" + op
-				+ "'");
-		if (res == JOptionPane.YES_OPTION) {
-			try {
-				lib.executeOperation(op);
-				historyModel.add(0, op);
-//				getEnvironment().getLibrary().printDocument();
-			} catch (HumbugException e) {
-				e.printStackTrace();
-			} catch (ParameterNotSetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		setCurrentRule(op);
+
+//				lib.executeOperation(op);
+//				historyModel.add(0, op);
 	}
 
 	private File chooseFile() {

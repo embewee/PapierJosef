@@ -47,8 +47,7 @@ public class LoadTab extends BaseTab implements PropertyChangeListener {
 		add(btnLoad);
 
 		//TODO: weg
-		JButton btnColor = new JButton(getEnvironment().getLocaleString(
-				"menuitem_color"));
+		JButton btnColor = new JButton("COLORIZE - WEG!!!");
 		btnColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				colorVAFIN();
