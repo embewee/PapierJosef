@@ -2,6 +2,7 @@ package hardcode.papierjosef.rajbo.view;
 
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.bibliothek.exception.ParameterNotFoundException;
 import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
@@ -13,11 +14,17 @@ import hardcode.papierjosef.rajbo.Environment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,6 +34,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 
 public class AnalyzeTab extends BaseTab {
@@ -44,6 +52,7 @@ public class AnalyzeTab extends BaseTab {
 	private JButton btnExecute;
 	private JLabel lblCurrent;
 	
+	private JPanel argsPane;
 	
 	private Object currentRuleOrChain;
 	
@@ -84,6 +93,13 @@ public class AnalyzeTab extends BaseTab {
 		
 		
 		paneRules.add(btnLoadRule);
+		
+		argsPane = new JPanel();
+		argsPane.setLayout(new BoxLayout(argsPane, BoxLayout.PAGE_AXIS));
+		argsPane.add(new JLabel("Operation's /Operation chain's arguments:"));
+
+		btnExecute = new JButton(getEnvironment().getLocaleString(
+				"sidebar_statistics_btnExecute"));
 
 		JPanel paneChains = new JPanel();
 		JLabel lblChains = new JLabel(getEnvironment().getLocaleString(
@@ -160,6 +176,7 @@ public class AnalyzeTab extends BaseTab {
 		});
 
 		add(paneRules);
+		add(argsPane);
 		add(paneChains);
 		add(externalPane);
 		add(executePane);
@@ -234,8 +251,37 @@ public class AnalyzeTab extends BaseTab {
 	
 	
 	
-	private void displayOperationArguments(Operation<?> op) {
-		
+	private void displayOperationArguments(final Operation<?> op) {
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		argsPane.add(new JScrollPane(panel));
+		argsPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
+		Set<String> args = op.getArguments();
+
+		Map<String, JTextField> fields = new HashMap<>();
+		for (final String key : args) {
+			JLabel labl = new JLabel(key + ":");
+			fields.put(key, new JTextField(1));
+			JTextField f1 = fields.get(key);
+			f1.setText(op.getParameterValue(key));
+			f1.addFocusListener(new FocusListener() {
+				public void focusGained(FocusEvent arg0) {}
+
+				public void focusLost(FocusEvent arg0) {
+					try {
+						op.setParameter(key,
+								((JTextField) arg0.getSource()).getText());
+						System.out.println(op.getParameterValue(key));
+					} catch (ParameterNotFoundException e) {
+						e.printStackTrace();
+					} catch (ParameterNotSetException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			panel.add(labl);
+			panel.add(f1);
+		}	
 	}
 	
 	
