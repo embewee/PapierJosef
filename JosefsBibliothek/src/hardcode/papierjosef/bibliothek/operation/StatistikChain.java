@@ -8,20 +8,21 @@ import java.util.NoSuchElementException;
 @SuppressWarnings("rawtypes")
 public class StatistikChain extends OperationChain<Statistik> {
 
+	@Override
 	public Statistik next() {
 		if (count == operations.size())
 			throw new NoSuchElementException();
 		count++;
-		// TODO bei Statistik hier sachen übergeben
-		operations.get(count - 1).setReport(
-				//FIXME DU OPFA
-				operations.get(count - 2).getReport());
 
+		if (count > 1) {
+			operations.get(count - 1).setReport(
+					operations.get(count - 2).getReport());
+		}
 		return operations.get(count - 1);
 	}
-	
+
 	public Report getReport() {
-		Operation<?> last = getOperationList().get(getOperationList().size());
+		Operation<?> last = getOperationList().get(getOperationList().size()-1);
 		Statistik<?> stat = (Statistik<?>) last;
 		return stat.getReport();
 	}

@@ -24,13 +24,17 @@ public class NGrams extends Statistik<Document> {
 	@Override
 	public void execute(Document d) {
 		List<String> result = new ArrayList<>();
-		result = (List<String>) this.getReport().values.values().stream()
+		result = (List<String>) this.getReport().values.keySet().stream()
 				.map(Object::toString)
 				.collect(Collectors.toCollection(ArrayList<String>::new));
 
-		Map<List<String>, Integer> freqs2 = countFreqs(getNGrams(result,
-				p("n", Integer.class)));
+		List<List<String>> temp=getNGrams(result,
+				p("n", Integer.class));
+		System.out.println(temp);
+		Map<List<String>, Integer> freqs2 = countFreqs(temp);
 
+		
+		
 		for (Entry<List<String>, Integer> e : freqs2.entrySet())
 			report.put(e.getKey().toString(), e.getValue());
 
