@@ -11,14 +11,21 @@ import java.util.stream.Collectors;
 
 public class NGrams extends Statistik<Document> {
 
+	
+	
+	public NGrams() {
+		super();
+		arg("n","2");
+	}
+
 	@Override
 	public void execute(Document d) {
 		List<String> result = new ArrayList<>();
 		result = (List<String>) this.getReport().values.values().stream()
 				.map(Object::toString)
 				.collect(Collectors.toCollection(ArrayList<String>::new));
-
-		List<List<String>> bigrams = getNGrams(result, 2);
+		
+		List<List<String>> bigrams = getNGrams(result, p("n",Integer.class));
 		Map<List<String>, Integer> freqs2 = countFreqs(bigrams);
 
 		freqs2 = freqs2.entrySet().stream().filter(e -> e.getValue() > 1)
