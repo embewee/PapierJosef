@@ -1,5 +1,6 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.statistik.Report;
 import hardcode.papierjosef.bibliothek.statistik.Statistik;
 import hardcode.papierjosef.model.document.HumbugException;
@@ -63,6 +64,9 @@ public class StatisticsTab extends BaseTab {
 //			getEnvironment().getLibrary().printDocument();
 		} catch (HumbugException e1) {
 			e1.printStackTrace();
+		} catch (ParameterNotSetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		displayResults(stat.getReport());
 	}

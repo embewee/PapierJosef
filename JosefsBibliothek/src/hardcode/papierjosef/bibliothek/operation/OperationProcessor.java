@@ -1,5 +1,6 @@
 package hardcode.papierjosef.bibliothek.operation;
 
+import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.model.document.Document;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.model.document.Paragraph;
@@ -15,7 +16,7 @@ public class OperationProcessor {
 
 	private OperationProcessor(){}
 	
-	public static void execute(OperationChain chain, Document document) throws HumbugException {
+	public static void execute(OperationChain chain, Document document) throws ParameterNotSetException, HumbugException {
 		Iterator it = chain.iterator();
 		while(it.hasNext()) {
 			Operation op = chain.next();
@@ -24,13 +25,13 @@ public class OperationProcessor {
 //		execute(chain.getChain(), document);
 	}
 		
-	public static void execute(List<Operation<?>> operations, Document document) throws HumbugException {
+	public static void execute(List<Operation<?>> operations, Document document) throws HumbugException, ParameterNotSetException {
 		for(Operation<?> op : operations) {
 			execute(op, document);
 		}
 	}
 	
-	public static void execute(Operation<?> op, Document document) throws HumbugException {
+	public static void execute(Operation<?> op, Document document) throws HumbugException, ParameterNotSetException {
 		if(op.getType().equals(Document.class)) {
 			executeInternal(op, document);
 		} else if (op.getType().equals(Paragraph.class)) {
@@ -90,30 +91,42 @@ public class OperationProcessor {
 	 * und Methode privat
 	 * @param op
 	 * @param document
+	 * @throws ParameterNotSetException 
 	 */
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void executeInternal (Operation op, Document patiens){
+	private static void executeInternal (Operation op, Document patiens) throws ParameterNotSetException{
+		check(op);
 		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void executeInternal (Operation op, Paragraph patiens){
+	private static void executeInternal (Operation op, Paragraph patiens) throws ParameterNotSetException{
+		check(op);
 		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void executeInternal (Operation op, Sentence patiens){
+	private static void executeInternal (Operation op, Sentence patiens) throws ParameterNotSetException{
+		check(op);
 		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void executeInternal (Operation op, Word patiens){
+	private static void executeInternal (Operation op, Word patiens) throws ParameterNotSetException{
+		check(op);
 		op.execute(patiens);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void executeInternal (Operation op, Punctuation patiens){
+	private static void executeInternal (Operation op, Punctuation patiens) throws ParameterNotSetException{
+		check(op);
 		op.execute(patiens);
+	}
+	
+	private static void check(Operation<?> op) throws ParameterNotSetException {
+		if(!op.allParametersSet()) {
+			throw new ParameterNotSetException("Some parameter values are not set in Operation '"+ op.toString() + "'.");
+		}
 	}
 }

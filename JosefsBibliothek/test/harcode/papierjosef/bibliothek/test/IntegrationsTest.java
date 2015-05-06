@@ -1,6 +1,7 @@
 package harcode.papierjosef.bibliothek.test;
 
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.filtry.Filtry;
 import hardcode.papierjosef.bibliothek.filtry.PlainTextFiltry;
 import hardcode.papierjosef.bibliothek.loader.documentloader.DocumentLoader;
@@ -34,7 +35,7 @@ public class IntegrationsTest {
 	}
 	
 	@Test
-	public void executeSomeOperation() throws HumbugException {
+	public void executeSomeOperation() throws HumbugException, ParameterNotSetException {
 		OperationProcessor.execute(new LangeSaetzeRegel(), document);
 		DocumentPrinter.printDocument(document);
 		

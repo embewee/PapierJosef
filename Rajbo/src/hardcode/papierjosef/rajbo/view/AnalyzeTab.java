@@ -2,6 +2,7 @@ package hardcode.papierjosef.rajbo.view;
 
 import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
 import hardcode.papierjosef.bibliothek.operation.Regel;
@@ -76,6 +77,9 @@ public class AnalyzeTab extends BaseTab {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
 					e1.printStackTrace();
+				} catch (ParameterNotSetException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -110,6 +114,9 @@ public class AnalyzeTab extends BaseTab {
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				} catch (ParameterNotSetException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -178,6 +185,9 @@ public class AnalyzeTab extends BaseTab {
 				historyModel.add(0, op);
 //				getEnvironment().getLibrary().printDocument();
 			} catch (HumbugException e) {
+				e.printStackTrace();
+			} catch (ParameterNotSetException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

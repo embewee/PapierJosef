@@ -1,6 +1,7 @@
 package hardcode.papierjosef.bibliothek;
 
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
+import hardcode.papierjosef.bibliothek.exception.ParameterNotSetException;
 import hardcode.papierjosef.bibliothek.filtry.Filtry;
 import hardcode.papierjosef.bibliothek.filtry.PlainTextFiltry;
 import hardcode.papierjosef.bibliothek.loader.LadeKlasse;
@@ -111,17 +112,15 @@ public class PapierJosefFacade {
 				filter.getResiduals());
 	}
 
-	public void executeOperation(Operation<?> op) throws HumbugException {
+	public void executeOperation(Operation<?> op) throws HumbugException, ParameterNotSetException {
 		OperationProcessor.execute(op, document);
 	}
 
-	public void executeOperationChain(OperationChain chain)
-			throws HumbugException {
+	public void executeOperationChain(OperationChain chain) throws HumbugException, ParameterNotSetException {
 		OperationProcessor.execute(chain, document);
 	}
 
-	public void executeOperationList(List<Operation<?>> operationList)
-			throws HumbugException {
+	public void executeOperationList(List<Operation<?>> operationList) throws HumbugException, ParameterNotSetException{
 		OperationProcessor.execute(operationList, document);
 	}
 
