@@ -10,6 +10,7 @@ import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
 import hardcode.papierjosef.bibliothek.operation.OperationProcessor;
 import hardcode.papierjosef.bibliothek.operation.Regel;
+import hardcode.papierjosef.bibliothek.operation.RuleChain;
 import hardcode.papierjosef.bibliothek.operation.TextHaeckslerKette;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.KorrelatSatz;
 import hardcode.papierjosef.bibliothek.operation.rules.quality.LangeSaetzeRegel;
@@ -57,7 +58,17 @@ public class PapierJosefFacade {
 
 	public Vector<OperationChain<?>> getInternalRuleChains() {
 		Vector<OperationChain<?>> chains = new Vector<>();
+		
+		//TODO: TEST-Chain
+		RuleChain testRuleChain = new RuleChain();
+		testRuleChain.setName("TestRuleChain");
+		testRuleChain.addOperation(new LangeSaetzeRegel());
+		testRuleChain.addOperation(new UnpersoenlichesPronomen());
+		
+		
+		
 		// TODO: add chains
+		chains.add(testRuleChain);
 		return chains;
 	}
 
