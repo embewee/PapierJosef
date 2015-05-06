@@ -1,5 +1,6 @@
 package hardcode.papierjosef.rajbo.view;
 
+import hardcode.papierjosef.bibliothek.PapierJosefFacade;
 import hardcode.papierjosef.bibliothek.exception.LibraryException;
 import hardcode.papierjosef.bibliothek.operation.Operation;
 import hardcode.papierjosef.bibliothek.operation.OperationChain;
@@ -8,7 +9,6 @@ import hardcode.papierjosef.bibliothek.operation.RuleChain;
 import hardcode.papierjosef.model.document.HumbugException;
 import hardcode.papierjosef.rajbo.Environment;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +43,7 @@ public class AnalyzeTab extends BaseTab {
 		super(e);
 	}
 
-	//TODO: comboRules mal typsichern!!
+	// TODO: comboRules mal typsichern!!
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	void init() {
@@ -64,21 +64,14 @@ public class AnalyzeTab extends BaseTab {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Regel rule = (Regel) comboRules.getSelectedItem();
+				TextUI ui = getEnvironment().getWindow().getTextUI();
+				PapierJosefFacade lib = getEnvironment().getLibrary();
 				try {
-					getEnvironment().getLibrary().executeOperation(rule);
+					lib.executeOperation(rule);
 					historyModel.add(0, rule);
-					getEnvironment()
-							.getWindow()
-							.getTextUI()
-							.colorize(
-									getEnvironment().getLibrary().getDocument()
-											.getChildElements(),
-									rule.getProperty(), rule.getType(),
-									getEnvironment()
-										.getWindow()
-										.getTextUI()
-										.nextColor());
-					getEnvironment().getLibrary().printDocument();
+					ui.colorize(lib.getDocument().getChildElements(),
+							rule.getProperty(), rule.getType(), ui.nextColor());
+					lib.printDocument();
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
@@ -102,24 +95,17 @@ public class AnalyzeTab extends BaseTab {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RuleChain chain = (RuleChain) comboChains.getSelectedItem();
+				TextUI ui = getEnvironment().getWindow().getTextUI();
+				PapierJosefFacade lib = getEnvironment().getLibrary();
 				try {
-					getEnvironment().getLibrary().executeOperationChain(chain);
+					lib.executeOperationChain(chain);
 					// TODO FIXME
 					// historyModel.add(0, chain);
 					for (String property : chain.getProperties()) {
-						getEnvironment()
-								.getWindow()
-								.getTextUI()
-								.colorizeAllLevels(
-										getEnvironment().getLibrary()
-											.getDocument()
-											.getChildElements(), property,
-											getEnvironment()
-												.getWindow()
-												.getTextUI()
-												.nextColor());
+						ui.colorizeAllLevels(lib.getDocument()
+								.getChildElements(), property, ui.nextColor());
 					}
-					getEnvironment().getLibrary().printDocument();
+					lib.printDocument();
 				} catch (HumbugException e1) {
 					e1.printStackTrace();
 				} catch (BadLocationException e1) {
@@ -154,7 +140,8 @@ public class AnalyzeTab extends BaseTab {
 								.getWindow()
 								.getTextUI()
 								.clearHighlight(
-										getEnvironment().getLibrary().getDocument()
+										getEnvironment().getLibrary()
+												.getDocument()
 												.getChildElements(),
 										op.getProperty(), op.getType());
 					} catch (BadLocationException e) {
